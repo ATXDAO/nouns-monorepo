@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { ChainId, useEthers } from '@usedapp/core';
 import { useAppDispatch, useAppSelector } from './hooks';
 import { setActiveAccount } from './state/slices/account';
@@ -24,7 +24,13 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 import { AvatarProvider } from '@davatar/react';
 import dayjs from 'dayjs';
 import DelegatePage from './pages/DelegatePage';
-import { AtxDaoNFT, useNFTCall } from './wrappers/atxDaoNFT';
+import { AtxDaoNFT, useGetBalance } from './wrappers/atxDaoNFT';
+import { ethers, utils } from 'ethers';
+
+import atxDaoABI from './wrappers/atxDaoNFTAbi';
+import config from './config';
+
+const abi = new utils.Interface(atxDaoABI);
 
 function App() {
   const { account, chainId, library } = useEthers();
@@ -38,11 +44,27 @@ function App() {
 
   const alertModal = useAppSelector(state => state.application.alertModal);
 
-  let balanceArr = useNFTCall('balanceOf', [account]);
-  let balance = 0;
-  if (balanceArr !== undefined) {
-    balance = balanceArr[0].toNumber();
-  }
+  let { balance, isLoading }  = useGetBalance(account!);
+
+  // const { useGetBalance2 } = useGetBalance();
+  // let bl = useGetBalance2(account!);
+
+
+  // let balanceArr = useNFTCall2('balanceOf', [account]);
+  // let balance = 0;
+  // if (balanceArr !== undefined) {
+  //   balance = balanceArr[0].toNumber();
+  // }
+
+
+
+  // const [balanceState, setBalanceState] = useState(0);
+
+  // let balanceArr = useNFTCall('balanceOf', [account]);
+  // let balance = 0;
+  // if (balanceArr !== undefined) {
+  //   balance = balanceArr[0].toNumber();
+  // }
 
   let output;
   if (account !== null) {

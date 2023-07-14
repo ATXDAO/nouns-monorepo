@@ -29,7 +29,7 @@ import { usePickByState } from '../../utils/colorResponsiveUIUtils';
 import { ReactComponent as Noggles } from '../../assets/icons/Noggles.svg';
 import { useTreasuryUSDValue } from '../../hooks/useTreasuryBalance';
 import clsx from 'clsx';
-import { AtxDaoNFT, useNFTCall } from '../../wrappers/atxDaoNFT';
+import { AtxDaoNFT } from '../../wrappers/atxDaoNFT';
 
 const NavBar = () => {
   const activeAccount = useAppSelector(state => state.account.activeAccount);
@@ -41,10 +41,10 @@ const NavBar = () => {
   const [isNavExpanded, setIsNavExpanded] = useState(false);
 
   let balance = 0;
-  let balanceArr = useNFTCall('balanceOf', [activeAccount]);
-  if (balanceArr !== undefined) {
-    balance = balanceArr[0].toNumber();
-  }
+  // let balanceArr = useNFTCall('balanceOf', [activeAccount]);
+  // if (balanceArr !== undefined) {
+  //   balance = balanceArr[0].toNumber();
+  // }
 
   const useStateBg =
     history.location.pathname === '/' ||
@@ -60,7 +60,6 @@ const NavBar = () => {
   const closeNav = () => setIsNavExpanded(false);
 
   let output;
-  console.log(balance);
 
   if (activeAccount !== undefined) {
     //return to > 0 after testing

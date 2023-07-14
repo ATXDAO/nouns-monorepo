@@ -52,7 +52,7 @@ export const cacheKey = (bucket: CacheBucket, ...parts: (string | number)[]) => 
 };
 
 export const CHAIN_ID: SupportedChains =  parseInt(process.env.REACT_APP_CHAIN_ID ?? '1');
-const INFURA_PROJECT_ID = '2dd05b4bb4b6476cb6bc714808ddb098';
+const INFURA_PROJECT_ID = process.env.REACT_APP_INFURA_PROJECT_ID ?? '2dd05b4bb4b6476cb6bc714808ddb098';
 
 export const ETHERSCAN_API_KEY = process.env.REACT_APP_ETHERSCAN_API_KEY ?? '';
 
