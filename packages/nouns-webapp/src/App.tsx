@@ -24,7 +24,7 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 import { AvatarProvider } from '@davatar/react';
 import dayjs from 'dayjs';
 import DelegatePage from './pages/DelegatePage';
-import { AtxDaoNFT, useNFTCall } from './wrappers/atxDaoNFT';
+// import { AtxDaoNFT, useNFTCall } from './wrappers/atxDaoNFT';
 
 function App() {
   const { account, chainId, library } = useEthers();
@@ -39,30 +39,32 @@ function App() {
   const alertModal = useAppSelector(state => state.application.alertModal);
 
   console.log(account);
-  
-  let balanceArr = useNFTCall('balanceOf', [account]);
-  console.log("balanceArr");
-  console.log(balanceArr);
+
+  // let balanceArr = useNFTCall('balanceOf', [account]);
+  // console.log("balanceArr");
+  // console.log(balanceArr);
 
   let balance = 0;
-  if (balanceArr !== undefined) {
-    // balance = balanceArr[0].toNumber();
-  }
-  console.log(balance);
+  // if (balanceArr !== undefined) {
+  //   // balance = balanceArr[0].toNumber();
+  // }
+  // console.log(balance);
 
   let output;
   if (account !== null) {
     //return to > 0 after testing
     if (balance >= 0) {
-      output = <div>
-      <Switch>
-        <Route exact path="/" component={AuctionPage} />
-        <Route exact path="/rep" component={RepPage} />
-        <Route exact path="/vote" component={GovernancePage} />
-        <Route component={NotFoundPage} />
-      </Switch>
-      <Footer />
-      </div>
+      output = (
+        <div>
+          <Switch>
+            <Route exact path="/" component={AuctionPage} />
+            {/* <Route exact path="/rep" component={RepPage} /> */}
+            <Route exact path="/vote" component={GovernancePage} />
+            <Route component={NotFoundPage} />
+          </Switch>
+          <Footer />
+        </div>
+      );
     }
   }
 
@@ -78,11 +80,11 @@ function App() {
       )}
       <BrowserRouter>
         <AvatarProvider
-          provider={(chainId === ChainId.Mainnet ? library : undefined)}
+          provider={chainId === ChainId.Mainnet ? library : undefined}
           batchLookups={true}
         >
           <NavBar />
-          { output }
+          {output}
         </AvatarProvider>
       </BrowserRouter>
     </div>

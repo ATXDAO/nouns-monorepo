@@ -36,22 +36,21 @@ const NavBar = () => {
   const stateBgColor = useAppSelector(state => state.application.stateBackgroundColor);
   const isCool = useAppSelector(state => state.application.isCoolBackground);
   const history = useHistory();
-  const treasuryBalance = useTreasuryUSDValue();
+  // const treasuryBalance = useTreasuryUSDValue();
+  const treasuryBalance: any = undefined;
   const daoEtherscanLink = buildEtherscanHoldingsLink(config.addresses.nounsDaoExecutor);
   const [isNavExpanded, setIsNavExpanded] = useState(false);
 
-
   let balance = 0;
 
-  console.log("trying to call balance");
-  let balanceArr = useNFTCall('balanceOf', [activeAccount]);
-  console.log("trying to convert balance");
+  // console.log('trying to call balance');
+  // let balanceArr = useNFTCall('balanceOf', [activeAccount]);
+  // console.log('trying to convert balance');
 
-
-  if (balanceArr !== undefined) {
-    balance = balanceArr[0].toNumber();
-  }
-  console.log(balance);
+  // if (balanceArr !== undefined) {
+  //   balance = balanceArr[0].toNumber();
+  // }
+  // console.log(balance);
   const useStateBg =
     history.location.pathname === '/' ||
     history.location.pathname.includes('/noun/') ||
@@ -71,7 +70,7 @@ const NavBar = () => {
   if (activeAccount !== undefined) {
     //return to > 0 after testing
     if (balance >= 0) {
-      output =
+      output = (
         <Navbar
           expand="xl"
           style={{ backgroundColor: `${useStateBg ? stateBgColor : 'white'}` }}
@@ -92,7 +91,7 @@ const NavBar = () => {
                     rel="noreferrer"
                   >
                     <NavBarTreasury
-                      treasuryBalance={treasuryBalance.toFixed(0)}
+                      treasuryBalance={treasuryBalance?.toFixed(0)}
                       treasuryStyle={nonWalletButtonStyle}
                     />
                   </Nav.Link>
@@ -107,111 +106,106 @@ const NavBar = () => {
             <Navbar.Collapse className="justify-content-end">
               {
                 <div>
-                <Nav.Link as={Link} to="/vote" className={classes.nounsNavLink} onClick={closeNav}>
-                <NavBarButton
-                  buttonText={<Trans>Proposals</Trans>}
-                  buttonIcon={<FontAwesomeIcon icon={faUsers} />}
-                  buttonStyle={nonWalletButtonStyle}
-                />
-                </Nav.Link>
-                <Nav.Link
-                  href={externalURL(ExternalURL.charmverse)}
-                  className={classes.nounsNavLink}
-                  target="_blank"
-                  rel="noreferrer"
-                  onClick={closeNav}
-                >
-                  <NavBarButton
-                    buttonText={"Docs"}
-                    buttonIcon={<FontAwesomeIcon icon={faBookOpen} />}
-                    buttonStyle={nonWalletButtonStyle}
-                  />
-                </Nav.Link>
-                <Nav.Link
-                  href={externalURL(ExternalURL.discourse)}
-                  className={classes.nounsNavLink}
-                  target="_blank"
-                  rel="noreferrer"
-                  onClick={closeNav}
-                >
-                  <NavBarButton
-                    buttonText={<Trans>Discourse</Trans>}
-                    buttonIcon={<FontAwesomeIcon icon={faComments} />}
-                    buttonStyle={nonWalletButtonStyle}
-                  />
-                </Nav.Link>
-                <Nav.Link as={Link} to="/rep" className={classes.nounsNavLink} onClick={closeNav}>
-                  <NavBarButton
-                    buttonText={<Trans>REP</Trans>}
-                    buttonIcon={<FontAwesomeIcon icon={faCoins} />}
-                    buttonStyle={nonWalletButtonStyle}
-                  />
-                </Nav.Link>
+                  <Nav.Link
+                    as={Link}
+                    to="/vote"
+                    className={classes.nounsNavLink}
+                    onClick={closeNav}
+                  >
+                    <NavBarButton
+                      buttonText={<Trans>Proposals</Trans>}
+                      buttonIcon={<FontAwesomeIcon icon={faUsers} />}
+                      buttonStyle={nonWalletButtonStyle}
+                    />
+                  </Nav.Link>
+                  <Nav.Link
+                    href={externalURL(ExternalURL.charmverse)}
+                    className={classes.nounsNavLink}
+                    target="_blank"
+                    rel="noreferrer"
+                    onClick={closeNav}
+                  >
+                    <NavBarButton
+                      buttonText={'Docs'}
+                      buttonIcon={<FontAwesomeIcon icon={faBookOpen} />}
+                      buttonStyle={nonWalletButtonStyle}
+                    />
+                  </Nav.Link>
+                  <Nav.Link
+                    href={externalURL(ExternalURL.discourse)}
+                    className={classes.nounsNavLink}
+                    target="_blank"
+                    rel="noreferrer"
+                    onClick={closeNav}
+                  >
+                    <NavBarButton
+                      buttonText={<Trans>Discourse</Trans>}
+                      buttonIcon={<FontAwesomeIcon icon={faComments} />}
+                      buttonStyle={nonWalletButtonStyle}
+                    />
+                  </Nav.Link>
+                  <Nav.Link as={Link} to="/rep" className={classes.nounsNavLink} onClick={closeNav}>
+                    <NavBarButton
+                      buttonText={<Trans>REP</Trans>}
+                      buttonIcon={<FontAwesomeIcon icon={faCoins} />}
+                      buttonStyle={nonWalletButtonStyle}
+                    />
+                  </Nav.Link>
                 </div>
               }
             </Navbar.Collapse>
             <NavWallet address={activeAccount || '0'} buttonStyle={nonWalletButtonStyle} />{' '}
           </Container>
         </Navbar>
+      );
     } else {
-      output =
-      <div>
+      output = (
+        <div>
+          <Container className={classes.centerScreen}>
+            <div>
+              <div style={{ textAlign: 'center' }}>
+                <img className={classes.centeredLogo} src={logo} alt="ATX DAO Logo"></img>
+              </div>
+              <h4 style={{ paddingTop: '20rem' }}>Membership Check</h4>
+              <div className={classes.center}>
+                <NavWallet address={activeAccount || '0'} />{' '}
+              </div>
+            </div>
+          </Container>
+          <body className={classes.loaderContainer}>
+            <img
+              className={classes.centeredLogo}
+              style={{ width: '10rem' }}
+              src={logo}
+              alt="ATX DAO Logo"
+            ></img>
+            <div className={classes.loader}>
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+          </body>
+        </div>
+      );
+    }
+  } else {
+    output = (
       <Container className={classes.centerScreen}>
         <div>
-            <div style={{textAlign: 'center'}}>
-              <img
-                className={classes.centeredLogo}
-                src={logo}
-                alt="ATX DAO Logo"
-              ></img>
-            </div>
-            <h4 style={{ paddingTop: '20rem'}}>
-            Membership Check
-            </h4>
-            <div className={classes.center}>
-              <NavWallet address={activeAccount || '0'} />{' '}
-            </div>
-        </div>
-      </Container>
-      <body className={classes.loaderContainer}>
           <img
-            className={classes.centeredLogo}
-            style={{ width: '10rem'}}
-            src={logo}
-            alt="ATX DAO Logo"
-          ></img>
-          <div className={classes.loader}>
-              <span></span>
-              <span></span>
-              <span></span>
-              <span></span>
-          </div>
-      </body>
-      </div>
-    }
-  }
-  else {
-    output =
-    <Container className={classes.centerScreen}>
-      <div>
-          <img
-            style={{ width: '10rem', paddingBottom: '3rem'}}
+            style={{ width: '10rem', paddingBottom: '3rem' }}
             src={logo}
             alt="ATX DAO Logo"
           ></img>
           <h3>Member Portal</h3>
-          <p>
-          Please verify your membership
-          </p>
+          <p>Please verify your membership</p>
           <NavWallet address={activeAccount || '0'} buttonStyle={nonWalletButtonStyle} />{' '}
-      </div>
-    </Container>
+        </div>
+      </Container>
+    );
   }
-  return (
-    <>
-      {output}
-    </>
-  );
+  return <>{output}</>;
 };
 
 export default NavBar;

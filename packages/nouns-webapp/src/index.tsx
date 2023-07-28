@@ -83,7 +83,7 @@ const supportedChainURLs = {
   [ChainId.Goerli]: createNetworkHttpUrl('goerli'),
   [ChainId.Mainnet]: createNetworkHttpUrl('mainnet'),
   [ChainId.Hardhat]: 'http://localhost:8545',
-  [ChainId.Polygon]: createNetworkHttpUrl('polygon')
+  [ChainId.Polygon]: createNetworkHttpUrl('polygon'),
 };
 
 // prettier-ignore
@@ -201,7 +201,7 @@ const PastAuctions: React.FC = () => {
 ReactDOM.render(
   <Provider store={store}>
     <ConnectedRouter history={history}>
-      <ChainSubscriber />
+      {/* <ChainSubscriber /> */}
       <React.StrictMode>
         <Web3ReactProvider
           getLibrary={

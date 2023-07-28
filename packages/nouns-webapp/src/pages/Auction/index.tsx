@@ -50,6 +50,7 @@ const AuctionPage: React.FC<AuctionPageProps> = props => {
 
   return (
     <>
+      <Auction />
       <NounsIntroSection />
       <Documentation
         backgroundColor={
