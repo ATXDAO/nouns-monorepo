@@ -6,8 +6,14 @@ import { Trans } from '@lingui/macro';
 import { i18n } from '@lingui/core';
 import Link from '../../components/Link';
 import snapshotImage from '../../assets/snapshot.jpeg';
+import { Container } from 'react-bootstrap';
+import logo from '../../assets/logo.png';
+import { AtxDaoNFT, useNFTCall } from '../../wrappers/atxDaoNFT';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import membershipCheckClasses from '../../components/MembershipCheckMessage/MembershipCheckMessage.module.css';
 
 const GovernancePage = () => {
+  const activeAccount = useAppSelector(state => state.account.activeAccount);
 
   const forumLink = (
     <Link
@@ -17,8 +23,21 @@ const GovernancePage = () => {
     />
   );
 
+  let balance = 0;
+  let balanceArr = useNFTCall('balanceOf', [activeAccount]);
+  if (balanceArr !== undefined) {
+    balance = balanceArr[0].toNumber();
+  }
+  let isMember = balance > 0;
+    
+  if (activeAccount === undefined)
+    return (<></>);
+  
   return (
-    <Section fullWidth={false} className={classes.section}>
+    <>
+    { isMember 
+      ?
+      <Section fullWidth={false} className={classes.section}>
       <Col lg={10} className={classes.wrapper}>
         <Row className={classes.headerRow}>
           <span>
@@ -56,6 +75,23 @@ const GovernancePage = () => {
         </Card>
       </Col>
     </Section>
+    :
+    <Container className={membershipCheckClasses.centerScreen}>
+        <div>
+            <div style={{textAlign: 'center'}}>
+              <img
+                className={membershipCheckClasses.centeredLogo}
+                src={logo}
+                alt="ATX DAO Logo"
+              ></img>
+            </div>
+            <h4 style={{ paddingTop: '20rem'}}>
+            Certain features of the website are disabled because the connected wallet does not contain an ATX DAO Membership NFT!
+            </h4>
+        </div>
+      </Container>
+  }
+  </>
   );
 };
 export default GovernancePage;

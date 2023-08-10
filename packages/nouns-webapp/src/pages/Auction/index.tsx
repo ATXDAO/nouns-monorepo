@@ -8,10 +8,9 @@ import useOnDisplayAuction from '../../wrappers/onDisplayAuction';
 import { useEffect } from 'react';
 import ProfileActivityFeed from '../../components/ProfileActivityFeed';
 import NounsIntroSection from '../../components/NounsIntroSection';
-import { Nav, Navbar, Container, Row, Col } from 'react-bootstrap';
-import classes from './Auction.module.css';
+import { Container } from 'react-bootstrap';
+import membershipCheckClasses from '../../components/MembershipCheckMessage/MembershipCheckMessage.module.css';
 import logo from '../../assets/logo.png';
-import NavWallet from '../../components/NavWallet';
 import { AtxDaoNFT, useNFTCall } from '../../wrappers/atxDaoNFT';
 
 interface AuctionPageProps {
@@ -54,59 +53,44 @@ const AuctionPage: React.FC<AuctionPageProps> = props => {
     ? 'var(--brand-cool-background)'
     : 'var(--brand-warm-background)';
 
-  
-    let balance = 0;
-    let balanceArr = useNFTCall('balanceOf', [activeAccount]);
-    if (balanceArr !== undefined) {
-      balance = balanceArr[0].toNumber();
-    }
+  let balance = 0;
+  let balanceArr = useNFTCall('balanceOf', [activeAccount]);
+  if (balanceArr !== undefined) {
+    balance = balanceArr[0].toNumber();
+  }
+  let isMember = balance > 0;
     
-    let i;
-    if (balance <= 0) {
-      i = <div>
-      <Container className={classes.centerScreen}>
+  if (activeAccount === undefined)
+    return (<></>);
+
+  return (
+    <>
+      { isMember 
+        ? 
+        <div><NounsIntroSection />
+        <Documentation
+          backgroundColor={
+            onDisplayAuctionNounId === undefined || onDisplayAuctionNounId === lastAuctionNounId
+              ? backgroundColor
+              : undefined
+          }/>
+        </div> 
+        : 
+        <Container className={membershipCheckClasses.centerScreen}>
         <div>
             <div style={{textAlign: 'center'}}>
               <img
-                className={classes.centeredLogo}
+                className={membershipCheckClasses.centeredLogo}
                 src={logo}
                 alt="ATX DAO Logo"
               ></img>
             </div>
             <h4 style={{ paddingTop: '20rem'}}>
-            The connected wallet does not contain an ATX DAO Membership NFT! Certain access to features will be limited.
+            Certain features of the website are disabled because the connected wallet does not contain an ATX DAO Membership NFT!
             </h4>
         </div>
       </Container>
-      <div className={classes.loaderContainer}>
-          <img
-            className={classes.centeredLogo}
-            style={{ width: '10rem'}}
-            src={logo}
-            alt="ATX DAO Logo"
-          ></img>
-          <div className={classes.loader}>
-              <span></span>
-              <span></span>
-              <span></span>
-              <span></span>
-          </div>
-      </div>
-    </div>;
-    }
-    
-
-  return (
-    <>
-      { i }
-      <NounsIntroSection />
-      <Documentation
-        backgroundColor={
-          onDisplayAuctionNounId === undefined || onDisplayAuctionNounId === lastAuctionNounId
-            ? backgroundColor
-            : undefined
-        }
-      />
+      };
     </>
   );
 };

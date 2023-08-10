@@ -25,6 +25,12 @@ import { AvatarProvider } from '@davatar/react';
 import dayjs from 'dayjs';
 import DelegatePage from './pages/DelegatePage';
 import { AtxDaoNFT, useNFTCall } from './wrappers/atxDaoNFT';
+import { useHistory } from 'react-router';
+
+import { Container } from 'react-bootstrap';
+import logo from './assets/logo.png';
+import NavWallet from './components/NavWallet';
+import NavBarButton, { NavBarButtonStyle } from './components/NavBarButton';
 
 function App() {
   const { account, chainId, library } = useEthers();
@@ -37,38 +43,39 @@ function App() {
   }, [account, dispatch]);
 
   const alertModal = useAppSelector(state => state.application.alertModal);
+  const isCool = useAppSelector(state => state.application.isCoolBackground);
+  const history = useHistory();
 
-  let balanceArr = useNFTCall('balanceOf', [account]);
-  let balance = 0;
-  if (balanceArr !== undefined) {
-    balance = balanceArr[0].toNumber();
-  }
+  const useStateBg = true ||
+    history.location.pathname === '/' ||
+    history.location.pathname.includes('/noun/') ||
+    history.location.pathname.includes('/auction/' || 
+    history.location.pathname.includes('/rep/'));
 
-  let output;
-  if (account !== null) {
-    //return to > 0 after testing
-    if (balance > 0) {
-      output = <div>
-      <Switch>
-        <Route exact path="/" component={AuctionPage} />
-        <Route exact path="/rep" component={RepPage} />
-        <Route exact path="/vote" component={GovernancePage} />
-        <Route component={NotFoundPage} />
-      </Switch>
-      <Footer />
+  const nonWalletButtonStyle = !useStateBg
+    ? NavBarButtonStyle.WHITE_INFO
+    : isCool
+    ? NavBarButtonStyle.COOL_INFO
+    : NavBarButtonStyle.WARM_INFO;
+
+  let connectWalletMessageContainer;
+  if (account === null) {
+    connectWalletMessageContainer =
+    <Container className={classes.centerScreen}>
+      <div>
+          <img
+            style={{ width: '10rem', paddingBottom: '3rem'}}
+            src={logo}
+            alt="ATX DAO Logo"
+          ></img>
+          <h3>Portal</h3>
+          <p>
+          Please connect your wallet
+          </p>
+          <NavWallet address={account || '0'} buttonStyle={nonWalletButtonStyle} />{' '}
       </div>
-    } else {
-      output = <div>
-      <Switch>
-        <Route exact path="/" component={AuctionPage} />
-        <Route exact path="/rep" component={RepPage} />
-        <Route component={NotFoundPage} />
-      </Switch>
-      <Footer />
-      </div>
-    }
-  }
-
+    </Container>
+  } 
 
   return (
     <div className={`${classes.wrapper}`}>
@@ -80,13 +87,21 @@ function App() {
           onDismiss={() => dispatch(setAlertModal({ ...alertModal, show: false }))}
         />
       )}
+
+      { connectWalletMessageContainer }
       <BrowserRouter>
         <AvatarProvider
           provider={(chainId === ChainId.Mainnet ? library : undefined)}
           batchLookups={true}
         >
-          <NavBar />
-          { output }
+        <NavBar />
+        <Switch>
+        <Route exact path="/" component={AuctionPage} />
+        <Route exact path="/rep" component={RepPage} />
+        <Route exact path="/vote" component={GovernancePage} />
+        <Route component={NotFoundPage} />
+      </Switch>
+      <Footer />
         </AvatarProvider>
       </BrowserRouter>
     </div>

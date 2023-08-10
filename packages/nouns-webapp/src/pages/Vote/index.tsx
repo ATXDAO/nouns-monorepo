@@ -45,6 +45,7 @@ import ShortAddress from '../../components/ShortAddress';
 import StreamWithdrawModal from '../../components/StreamWithdrawModal';
 import { parseStreamCreationCallData } from '../../utils/streamingPaymentUtils/streamingPaymentUtils';
 
+
 dayjs.extend(utc);
 dayjs.extend(timezone);
 dayjs.extend(advanced);
@@ -324,6 +325,7 @@ const VotePage = ({
   const abstainNouns = getNounVotes(data, 2);
   const isV2Prop = dqInfo.proposal.quorumCoefficient > 0;
 
+  
   return (
     <Section fullWidth={false} className={classes.votePage}>
       {showDynamicQuorumInfoModal && (

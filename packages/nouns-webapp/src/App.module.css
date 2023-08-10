@@ -18,3 +18,22 @@
     overflow-x: hidden;
   }
 }
+
+.centerScreen {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  min-height: 80vh;
+  z-index: 15;
+  background-color: white;
+}
+
+.centeredLogo {
+  position: absolute;
+  top: calc(50vh - 10rem);
+  left: calc(50vw - 5rem);
+  width: 10rem;
+  background: url('./assets/logo.png') center center / cover;
+  z-index: 15;
+}
