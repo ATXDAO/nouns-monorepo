@@ -46,10 +46,11 @@ const NavBar = () => {
     balance = balanceArr[0].toNumber();
   }
 
-  const useStateBg =
+  const useStateBg = true ||
     history.location.pathname === '/' ||
     history.location.pathname.includes('/noun/') ||
-    history.location.pathname.includes('/auction/');
+    history.location.pathname.includes('/auction/' || 
+    history.location.pathname.includes('/rep/'));
 
   const nonWalletButtonStyle = !useStateBg
     ? NavBarButtonStyle.WHITE_INFO
@@ -120,12 +121,10 @@ const NavBar = () => {
   }
 
   if (activeAccount !== undefined) {
-    //return to > 0 after testing
-    if (balance > 0) {
-      output =
+    output =
         <Navbar
           expand="xl"
-          style={{ backgroundColor: `${useStateBg ? stateBgColor : 'white'}` }}
+          style={{ backgroundColor: `${useStateBg ? stateBgColor : 'white'}`}}
           className={classes.navBarCustom}
           expanded={isNavExpanded}
         >
@@ -161,51 +160,93 @@ const NavBar = () => {
             <NavWallet address={activeAccount || '0'} buttonStyle={nonWalletButtonStyle} />{' '}
           </Container>
         </Navbar>
-    } else {
-      output =
-      <div>
-         <Navbar
-          expand="xl"
-          style={{ backgroundColor: `${useStateBg ? stateBgColor : 'white'}` }}
-          className={classes.navBarCustom}
-          expanded={isNavExpanded}
-        >
-          <Container style={{ maxWidth: 'unset' }}>
-            <div className={classes.brandAndTreasuryWrapper}>
-              <Navbar.Brand as={Link} to="/" className={classes.navBarBrand}>
-                <img src={logo} className={classes.navBarLogo} alt="ATX DAO Logo" />
-              </Navbar.Brand>
-              <Nav.Item>
-                {treasuryBalance && (
-                  <Nav.Link
-                    href={daoEtherscanLink}
-                    className={classes.nounsNavLink}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    <NavBarTreasury
-                      treasuryBalance={treasuryBalance.toFixed(0)}
-                      treasuryStyle={nonWalletButtonStyle}
-                    />
-                  </Nav.Link>
-                )}
-              </Nav.Item>
-            </div>
-            <Navbar.Toggle
-              className={classes.navBarToggle}
-              aria-controls="basic-navbar-nav"
-              onClick={() => setIsNavExpanded(!isNavExpanded)}
-            />
-            <Navbar.Collapse className="justify-content-end">
-              {
-                navBarLinks
-              }
-            </Navbar.Collapse>
-            <NavWallet address={activeAccount || '0'} buttonStyle={nonWalletButtonStyle} />{' '}
-          </Container>
-        </Navbar>
-      </div>
-    }
+
+    //return to > 0 after testing
+    // if (balance > 0) {
+    //   output =
+    //     <Navbar
+    //       expand="xl"
+    //       style={{ backgroundColor: `${useStateBg ? stateBgColor : 'white'}` }}
+    //       className={classes.navBarCustom}
+    //       expanded={isNavExpanded}
+    //     >
+    //       <Container style={{ maxWidth: 'unset' }}>
+    //         <div className={classes.brandAndTreasuryWrapper}>
+    //           <Navbar.Brand as={Link} to="/" className={classes.navBarBrand}>
+    //             <img src={logo} className={classes.navBarLogo} alt="ATX DAO Logo" />
+    //           </Navbar.Brand>
+    //           <Nav.Item>
+    //             {treasuryBalance && (
+    //               <Nav.Link
+    //                 href={daoEtherscanLink}
+    //                 className={classes.nounsNavLink}
+    //                 target="_blank"
+    //                 rel="noreferrer"
+    //               >
+    //                 <NavBarTreasury
+    //                   treasuryBalance={treasuryBalance.toFixed(0)}
+    //                   treasuryStyle={nonWalletButtonStyle}
+    //                 />
+    //               </Nav.Link>
+    //             )}
+    //           </Nav.Item>
+    //         </div>
+    //         <Navbar.Toggle
+    //           className={classes.navBarToggle}
+    //           aria-controls="basic-navbar-nav"
+    //           onClick={() => setIsNavExpanded(!isNavExpanded)}
+    //         />
+    //         <Navbar.Collapse className="justify-content-end">
+    //         { navBarLinks }
+    //         </Navbar.Collapse>
+    //         <NavWallet address={activeAccount || '0'} buttonStyle={nonWalletButtonStyle} />{' '}
+    //       </Container>
+    //     </Navbar>
+    // } else {
+    //   output =
+    //   <div>
+    //      <Navbar
+    //       expand="xl"
+    //       style={{ backgroundColor: `${useStateBg ? stateBgColor : 'white'}` }}
+    //       className={classes.navBarCustom}
+    //       expanded={isNavExpanded}
+    //     >
+    //       <Container style={{ maxWidth: 'unset' }}>
+    //         <div className={classes.brandAndTreasuryWrapper}>
+    //           <Navbar.Brand as={Link} to="/" className={classes.navBarBrand}>
+    //             <img src={logo} className={classes.navBarLogo} alt="ATX DAO Logo" />
+    //           </Navbar.Brand>
+    //           <Nav.Item>
+    //             {treasuryBalance && (
+    //               <Nav.Link
+    //                 href={daoEtherscanLink}
+    //                 className={classes.nounsNavLink}
+    //                 target="_blank"
+    //                 rel="noreferrer"
+    //               >
+    //                 <NavBarTreasury
+    //                   treasuryBalance={treasuryBalance.toFixed(0)}
+    //                   treasuryStyle={nonWalletButtonStyle}
+    //                 />
+    //               </Nav.Link>
+    //             )}
+    //           </Nav.Item>
+    //         </div>
+    //         <Navbar.Toggle
+    //           className={classes.navBarToggle}
+    //           aria-controls="basic-navbar-nav"
+    //           onClick={() => setIsNavExpanded(!isNavExpanded)}
+    //         />
+    //         <Navbar.Collapse className="justify-content-end">
+    //           {
+    //             navBarLinks
+    //           }
+    //         </Navbar.Collapse>
+    //         <NavWallet address={activeAccount || '0'} buttonStyle={nonWalletButtonStyle} />{' '}
+    //       </Container>
+    //     </Navbar>
+    //   </div>
+    // }
   }
   else {
     output =
