@@ -62,6 +62,63 @@ const NavBar = () => {
   let output;
   console.log(balance);
 
+  let navBarLinks = <div>
+  <Nav.Link as={Link} to="/vote" className={classes.nounsNavLink} onClick={closeNav}>
+        <NavBarButton
+          buttonText={<Trans>Proposals</Trans>}
+          buttonIcon={<FontAwesomeIcon icon={faUsers} />}
+          buttonStyle={nonWalletButtonStyle}
+        />
+        </Nav.Link>
+        <Nav.Link
+          href={externalURL(ExternalURL.charmverse)}
+          className={classes.nounsNavLink}
+          target="_blank"
+          rel="noreferrer"
+          onClick={closeNav}
+        >
+          <NavBarButton
+            buttonText={"Docs"}
+            buttonIcon={<FontAwesomeIcon icon={faBookOpen} />}
+            buttonStyle={nonWalletButtonStyle}
+          />
+        </Nav.Link>
+        <Nav.Link
+          href={externalURL(ExternalURL.discourse)}
+          className={classes.nounsNavLink}
+          target="_blank"
+          rel="noreferrer"
+          onClick={closeNav}
+        >
+          <NavBarButton
+            buttonText={<Trans>Discourse</Trans>}
+            buttonIcon={<FontAwesomeIcon icon={faComments} />}
+            buttonStyle={nonWalletButtonStyle}
+          />
+        </Nav.Link>
+        <Nav.Link as={Link} to="/rep" className={classes.nounsNavLink} onClick={closeNav}>
+          <NavBarButton
+            buttonText={<Trans>REP</Trans>}
+            buttonIcon={<FontAwesomeIcon icon={faCoins} />}
+            buttonStyle={nonWalletButtonStyle}
+          />
+        </Nav.Link>
+</div>;
+
+  if (activeAccount !== undefined) {
+    if (balance <= 0) {
+      navBarLinks = <div>
+            <Nav.Link as={Link} to="/rep" className={classes.nounsNavLink} onClick={closeNav}>
+              <NavBarButton
+                buttonText={<Trans>REP</Trans>}
+                buttonIcon={<FontAwesomeIcon icon={faCoins} />}
+                buttonStyle={nonWalletButtonStyle}
+              />
+            </Nav.Link>
+    </div>;
+    }
+  }
+
   if (activeAccount !== undefined) {
     //return to > 0 after testing
     if (balance > 0) {
@@ -99,50 +156,7 @@ const NavBar = () => {
               onClick={() => setIsNavExpanded(!isNavExpanded)}
             />
             <Navbar.Collapse className="justify-content-end">
-              {
-                <div>
-                <Nav.Link as={Link} to="/vote" className={classes.nounsNavLink} onClick={closeNav}>
-                <NavBarButton
-                  buttonText={<Trans>Proposals</Trans>}
-                  buttonIcon={<FontAwesomeIcon icon={faUsers} />}
-                  buttonStyle={nonWalletButtonStyle}
-                />
-                </Nav.Link>
-                <Nav.Link
-                  href={externalURL(ExternalURL.charmverse)}
-                  className={classes.nounsNavLink}
-                  target="_blank"
-                  rel="noreferrer"
-                  onClick={closeNav}
-                >
-                  <NavBarButton
-                    buttonText={"Docs"}
-                    buttonIcon={<FontAwesomeIcon icon={faBookOpen} />}
-                    buttonStyle={nonWalletButtonStyle}
-                  />
-                </Nav.Link>
-                <Nav.Link
-                  href={externalURL(ExternalURL.discourse)}
-                  className={classes.nounsNavLink}
-                  target="_blank"
-                  rel="noreferrer"
-                  onClick={closeNav}
-                >
-                  <NavBarButton
-                    buttonText={<Trans>Discourse</Trans>}
-                    buttonIcon={<FontAwesomeIcon icon={faComments} />}
-                    buttonStyle={nonWalletButtonStyle}
-                  />
-                </Nav.Link>
-                <Nav.Link as={Link} to="/rep" className={classes.nounsNavLink} onClick={closeNav}>
-                  <NavBarButton
-                    buttonText={<Trans>REP</Trans>}
-                    buttonIcon={<FontAwesomeIcon icon={faCoins} />}
-                    buttonStyle={nonWalletButtonStyle}
-                  />
-                </Nav.Link>
-                </div>
-              }
+            { navBarLinks }
             </Navbar.Collapse>
             <NavWallet address={activeAccount || '0'} buttonStyle={nonWalletButtonStyle} />{' '}
           </Container>
@@ -150,37 +164,46 @@ const NavBar = () => {
     } else {
       output =
       <div>
-      <Container className={classes.centerScreen}>
-        <div>
-            <div style={{textAlign: 'center'}}>
-              <img
-                className={classes.centeredLogo}
-                src={logo}
-                alt="ATX DAO Logo"
-              ></img>
+         <Navbar
+          expand="xl"
+          style={{ backgroundColor: `${useStateBg ? stateBgColor : 'white'}` }}
+          className={classes.navBarCustom}
+          expanded={isNavExpanded}
+        >
+          <Container style={{ maxWidth: 'unset' }}>
+            <div className={classes.brandAndTreasuryWrapper}>
+              <Navbar.Brand as={Link} to="/" className={classes.navBarBrand}>
+                <img src={logo} className={classes.navBarLogo} alt="ATX DAO Logo" />
+              </Navbar.Brand>
+              <Nav.Item>
+                {treasuryBalance && (
+                  <Nav.Link
+                    href={daoEtherscanLink}
+                    className={classes.nounsNavLink}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    <NavBarTreasury
+                      treasuryBalance={treasuryBalance.toFixed(0)}
+                      treasuryStyle={nonWalletButtonStyle}
+                    />
+                  </Nav.Link>
+                )}
+              </Nav.Item>
             </div>
-            <h4 style={{ paddingTop: '20rem'}}>
-            Please connect a wallet that contains an ATX DAO Membership NFT!
-            </h4>
-            <div className={classes.center}>
-              <NavWallet address={activeAccount || '0'} />{' '}
-            </div>
-        </div>
-      </Container>
-      <div className={classes.loaderContainer}>
-          <img
-            className={classes.centeredLogo}
-            style={{ width: '10rem'}}
-            src={logo}
-            alt="ATX DAO Logo"
-          ></img>
-          <div className={classes.loader}>
-              <span></span>
-              <span></span>
-              <span></span>
-              <span></span>
-          </div>
-      </div>
+            <Navbar.Toggle
+              className={classes.navBarToggle}
+              aria-controls="basic-navbar-nav"
+              onClick={() => setIsNavExpanded(!isNavExpanded)}
+            />
+            <Navbar.Collapse className="justify-content-end">
+              {
+                navBarLinks
+              }
+            </Navbar.Collapse>
+            <NavWallet address={activeAccount || '0'} buttonStyle={nonWalletButtonStyle} />{' '}
+          </Container>
+        </Navbar>
       </div>
     }
   }

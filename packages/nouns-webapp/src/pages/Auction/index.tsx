@@ -8,6 +8,11 @@ import useOnDisplayAuction from '../../wrappers/onDisplayAuction';
 import { useEffect } from 'react';
 import ProfileActivityFeed from '../../components/ProfileActivityFeed';
 import NounsIntroSection from '../../components/NounsIntroSection';
+import { Nav, Navbar, Container, Row, Col } from 'react-bootstrap';
+import classes from './Auction.module.css';
+import logo from '../../assets/logo.png';
+import NavWallet from '../../components/NavWallet';
+import { AtxDaoNFT, useNFTCall } from '../../wrappers/atxDaoNFT';
 
 interface AuctionPageProps {
   initialAuctionId?: number;
@@ -18,6 +23,7 @@ const AuctionPage: React.FC<AuctionPageProps> = props => {
   const onDisplayAuction = useOnDisplayAuction();
   const lastAuctionNounId = useAppSelector(state => state.onDisplayAuction.lastAuctionNounId);
   const onDisplayAuctionNounId = onDisplayAuction?.nounId.toNumber();
+  const activeAccount = useAppSelector(state => state.account.activeAccount);
 
   const dispatch = useAppDispatch();
 
@@ -48,8 +54,51 @@ const AuctionPage: React.FC<AuctionPageProps> = props => {
     ? 'var(--brand-cool-background)'
     : 'var(--brand-warm-background)';
 
+  
+    let balance = 0;
+    let balanceArr = useNFTCall('balanceOf', [activeAccount]);
+    if (balanceArr !== undefined) {
+      balance = balanceArr[0].toNumber();
+    }
+    
+    let i;
+    if (balance <= 0) {
+      i = <div>
+      <Container className={classes.centerScreen}>
+        <div>
+            <div style={{textAlign: 'center'}}>
+              <img
+                className={classes.centeredLogo}
+                src={logo}
+                alt="ATX DAO Logo"
+              ></img>
+            </div>
+            <h4 style={{ paddingTop: '20rem'}}>
+            The connected wallet does not contain an ATX DAO Membership NFT! Certain access to features will be limited.
+            </h4>
+        </div>
+      </Container>
+      <div className={classes.loaderContainer}>
+          <img
+            className={classes.centeredLogo}
+            style={{ width: '10rem'}}
+            src={logo}
+            alt="ATX DAO Logo"
+          ></img>
+          <div className={classes.loader}>
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+          </div>
+      </div>
+    </div>;
+    }
+    
+
   return (
     <>
+      { i }
       <NounsIntroSection />
       <Documentation
         backgroundColor={

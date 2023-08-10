@@ -57,8 +57,18 @@ function App() {
       </Switch>
       <Footer />
       </div>
+    } else {
+      output = <div>
+      <Switch>
+        <Route exact path="/" component={AuctionPage} />
+        <Route exact path="/rep" component={RepPage} />
+        <Route component={NotFoundPage} />
+      </Switch>
+      <Footer />
+      </div>
     }
   }
+
 
   return (
     <div className={`${classes.wrapper}`}>
