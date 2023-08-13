@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
@@ -37,20 +37,28 @@ import { appendBid } from './state/slices/auction';
 import { ConnectedRouter, connectRouter } from 'connected-react-router';
 import { createBrowserHistory, History } from 'history';
 import { applyMiddleware, createStore, combineReducers, PreloadedState } from 'redux';
-import { routerMiddleware } from 'connected-react-router';
+// import { routerMiddleware } from 'connected-react-router';
 import { Provider } from 'react-redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { nounPath } from './utils/history';
-import { push } from 'connected-react-router';
+// import { push } from 'connected-react-router';
 import { LanguageProvider } from './i18n/LanguageProvider';
+
+import { createRouterMiddleware, createRouterReducerMapObject, push, ReduxRouter, createRouterReducer } from '@lagunovsky/redux-react-router'
+import { configureStore } from '@reduxjs/toolkit'
+// import { createBrowserHistory } from 'history'
+// import React from 'react'
+import { createRoot } from 'react-dom/client'
+import { useDispatch } from 'react-redux'
+import { NavLink } from 'react-router-dom'
+
 
 dotenv.config();
 
-export const history = createBrowserHistory();
 
 const createRootReducer = (history: History) =>
   combineReducers({
-    router: connectRouter(history),
+    router: createRouterReducer(history),
     account,
     application,
     auction,
@@ -59,22 +67,33 @@ const createRootReducer = (history: History) =>
     onDisplayAuction,
   });
 
-export default function configureStore(preloadedState: PreloadedState<any>) {
-  const store = createStore(
-    createRootReducer(history), // root reducer with router state
-    preloadedState,
-    composeWithDevTools(
-      applyMiddleware(
-        routerMiddleware(history), // for dispatching history actions
-        // ... other middlewares ...
-      ),
-    ),
-  );
+export const history = createBrowserHistory()
+const routerMiddleware = createRouterMiddleware(history)
 
-  return store;
-}
+const store = configureStore({
+  reducer: createRootReducer(history),
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().prepend(routerMiddleware),
+})
 
-const store = configureStore({});
+// export const history = createBrowserHistory();
+
+
+// export default function configureStore(preloadedState: PreloadedState<any>) {
+//   const store = createStore(
+//     createRootReducer(history), // root reducer with router state
+//     preloadedState,
+//     composeWithDevTools(
+//       applyMiddleware(
+//         routerMiddleware(history), // for dispatching history actions
+//         // ... other middlewares ...
+//       ),
+//     ),
+//   );
+
+//   return store;
+// }
+
+// const store = configureStore({});
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
@@ -187,7 +206,11 @@ const ChainSubscriber: React.FC = () => {
 };
 
 const PastAuctions: React.FC = () => {
-  const latestAuctionId = useAppSelector(state => state.onDisplayAuction.lastAuctionNounId);
+  const latestAuctionId = useAppSelector(state => 
+  {
+    return state.onDisplayAuction.lastAuctionNounId
+  });
+
   const { data } = useQuery(latestAuctionsQuery());
   const dispatch = useAppDispatch();
 
@@ -198,9 +221,12 @@ const PastAuctions: React.FC = () => {
   return <></>;
 };
 
-ReactDOM.render(
+const root = ReactDOM.createRoot(document.getElementById('root')!);
+root.render(
   <Provider store={store}>
-    <ConnectedRouter history={history}>
+    {/* <ConnectedRouter history={history}> */}
+    <ReduxRouter history={history}>
+
       <ChainSubscriber />
       <React.StrictMode>
         <Web3ReactProvider
@@ -209,7 +235,7 @@ ReactDOM.render(
           }
         >
           <ApolloProvider client={client}>
-            <PastAuctions />
+            {/* <PastAuctions /> */}
             <DAppProvider config={useDappConfig}>
               <LanguageProvider>
                 <App />
@@ -219,10 +245,10 @@ ReactDOM.render(
           </ApolloProvider>
         </Web3ReactProvider>
       </React.StrictMode>
-    </ConnectedRouter>
-  </Provider>,
-  document.getElementById('root'),
-);
+      </ReduxRouter>
+    {/* </ConnectedRouter> */}
+  </Provider>);
+
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))

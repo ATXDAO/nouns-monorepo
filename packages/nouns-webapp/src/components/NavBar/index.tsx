@@ -1,7 +1,7 @@
 import { useAppSelector } from '../../hooks';
 import classes from './NavBar.module.css';
 import logo from '../../assets/logo.png';
-import { useHistory } from 'react-router';
+import { useNavigate } from 'react-router';
 import { Link } from 'react-router-dom';
 import { Nav, Navbar, Container, Row, Col } from 'react-bootstrap';
 import testnetNoun from '../../assets/testnet-noun.png';
@@ -35,7 +35,7 @@ const NavBar = () => {
   const activeAccount = useAppSelector(state => state.account.activeAccount);
   const stateBgColor = useAppSelector(state => state.application.stateBackgroundColor);
   const isCool = useAppSelector(state => state.application.isCoolBackground);
-  const history = useHistory();
+  const navigate = useNavigate();
   const treasuryBalance = useTreasuryUSDValue();
   const daoEtherscanLink = buildEtherscanHoldingsLink(config.addresses.nounsDaoExecutor);
   const [isNavExpanded, setIsNavExpanded] = useState(false);
@@ -46,16 +46,17 @@ const NavBar = () => {
     balance = balanceArr[0].toNumber();
   }
 
-  const useStateBg =
-    history.location.pathname === '/' ||
-    history.location.pathname.includes('/noun/') ||
-    history.location.pathname.includes('/auction/');
+  // const useStateBg =
+  //   history.location.pathname === '/' ||
+  //   history.location.pathname.includes('/noun/') ||
+  //   history.location.pathname.includes('/auction/');
 
-  const nonWalletButtonStyle = !useStateBg
-    ? NavBarButtonStyle.WHITE_INFO
-    : isCool
-    ? NavBarButtonStyle.COOL_INFO
-    : NavBarButtonStyle.WARM_INFO;
+  const nonWalletButtonStyle = NavBarButtonStyle.WARM_INFO;
+  // !useStateBg
+  //   ? NavBarButtonStyle.WHITE_INFO
+  //   : isCool
+  //   ? NavBarButtonStyle.COOL_INFO
+  //   : NavBarButtonStyle.WARM_INFO;
 
   const closeNav = () => setIsNavExpanded(false);
 
@@ -68,7 +69,7 @@ const NavBar = () => {
       output =
         <Navbar
           expand="xl"
-          style={{ backgroundColor: `${useStateBg ? stateBgColor : 'white'}` }}
+          style={{ backgroundColor: `${true ? stateBgColor : 'white'}` }}
           className={classes.navBarCustom}
           expanded={isNavExpanded}
         >

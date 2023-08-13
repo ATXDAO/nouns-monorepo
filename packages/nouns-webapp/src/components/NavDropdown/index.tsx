@@ -3,7 +3,7 @@ import NavBarButton, { NavBarButtonStyle } from '../NavBarButton';
 import classes from './NavDropdown.module.css';
 import { Dropdown } from 'react-bootstrap';
 import clsx from 'clsx';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { usePickByState } from '../../utils/colorResponsiveUIUtils';
 import { Trans } from '@lingui/macro';
 import navDropdownClasses from '../NavWallet/NavBarDropdown.module.css';
@@ -25,20 +25,20 @@ const NavDropDown: React.FC<NavDropDownProps> = props => {
   const { buttonStyle } = props;
 
   const [buttonUp, setButtonUp] = useState(false);
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const statePrimaryButtonClass = usePickByState(
     navDropdownClasses.whiteInfo,
     navDropdownClasses.coolInfo,
     navDropdownClasses.warmInfo,
-    history,
+    navigate,
   );
 
   const stateSelectedDropdownClass = usePickByState(
     navDropdownClasses.whiteInfoSelected,
     navDropdownClasses.dropdownActive,
     navDropdownClasses.dropdownActive,
-    history,
+    navigate,
   );
 
   const customDropdownToggle = React.forwardRef<RefType, Props>(({ onClick, value }, ref) => (

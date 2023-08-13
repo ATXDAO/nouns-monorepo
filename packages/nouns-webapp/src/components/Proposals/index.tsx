@@ -2,7 +2,7 @@ import { PartialProposal, ProposalState, useProposalThreshold } from '../../wrap
 import { Alert, Button } from 'react-bootstrap';
 import ProposalStatus from '../ProposalStatus';
 import classes from './Proposals.module.css';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useBlockNumber, useEthers } from '@usedapp/core';
 import { isMobileScreen } from '../../utils/isMobile';
 import clsx from 'clsx';
@@ -73,7 +73,7 @@ const getCountdownCopy = (
 };
 
 const Proposals = ({ proposals }: { proposals: PartialProposal[] }) => {
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const { account } = useEthers();
   const connectedAccountNounVotes = useUserVotes() || 0;
@@ -113,7 +113,7 @@ const Proposals = ({ proposals }: { proposals: PartialProposal[] }) => {
             <div className={classes.submitProposalButtonWrapper}>
               <Button
                 className={classes.generateBtn}
-                onClick={() => history.push('create-proposal')}
+                onClick={() => navigate('create-proposal')}
               >
                 <Trans>Submit Proposal</Trans>
               </Button>

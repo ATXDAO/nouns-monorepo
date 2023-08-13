@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { ChainId, useEthers } from '@usedapp/core';
 import { useAppDispatch, useAppSelector } from './hooks';
 import { setActiveAccount } from './state/slices/account';
-import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
+import { BrowserRouter, Route } from 'react-router-dom';
 import { setAlertModal } from './state/slices/application';
 import classes from './App.module.css';
 import '../src/css/globals.css';
@@ -25,6 +25,21 @@ import { AvatarProvider } from '@davatar/react';
 import dayjs from 'dayjs';
 import DelegatePage from './pages/DelegatePage';
 import { AtxDaoNFT, useNFTCall } from './wrappers/atxDaoNFT';
+import { Routes } from 'react-router'
+import { createBrowserHistory, History } from 'history';
+import { createRouterMiddleware, createRouterReducerMapObject, push, ReduxRouter } from '@lagunovsky/redux-react-router'
+import { configureStore } from '@reduxjs/toolkit'
+import { Provider } from 'react-redux';
+export const history = createBrowserHistory()
+const routerMiddleware = createRouterMiddleware(history)
+
+const store = configureStore({
+  reducer: createRouterReducerMapObject(history),
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().prepend(routerMiddleware),
+})
+
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;
 
 function App() {
   const { account, chainId, library } = useEthers();
@@ -36,7 +51,7 @@ function App() {
     dispatch(setActiveAccount(account));
   }, [account, dispatch]);
 
-  const alertModal = useAppSelector(state => state.application.alertModal);
+  // const alertModal = useAppSelector(state => state.application.alertModal);
 
   let balanceArr = useNFTCall('balanceOf', [account]);
   let balance = 0;
@@ -49,12 +64,12 @@ function App() {
     //return to > 0 after testing
     if (balance > 0) {
       output = <div>
-      <Switch>
-        <Route exact path="/" component={AuctionPage} />
+      {/* <Switch> */}
+        {/* <Route exact path="/" component={AuctionPage} />
         <Route exact path="/rep" component={RepPage} />
         <Route exact path="/vote" component={GovernancePage} />
-        <Route component={NotFoundPage} />
-      </Switch>
+        <Route component={NotFoundPage} /> */}
+      {/* </Switch> */}
       <Footer />
       </div>
     }
@@ -62,22 +77,29 @@ function App() {
 
   return (
     <div className={`${classes.wrapper}`}>
-      {Number(CHAIN_ID) !== chainId && <NetworkAlert />}
+      {/* {Number(CHAIN_ID) !== chainId && <NetworkAlert />}
       {alertModal.show && (
         <AlertModal
           title={alertModal.title}
           content={<p>{alertModal.message}</p>}
           onDismiss={() => dispatch(setAlertModal({ ...alertModal, show: false }))}
         />
-      )}
+      )} */}
       <BrowserRouter>
-        <AvatarProvider
+      {/* <Routes>
+            <Route path={'/'} element={<AuctionPage/>}/>
+          </Routes> */}
+        <Provider store={store}>
+
+        </Provider>
+        {/* <AvatarProvider
           provider={(chainId === ChainId.Mainnet ? library : undefined)}
           batchLookups={true}
-        >
+        > */}
+
           <NavBar />
-          { output }
-        </AvatarProvider>
+          {/* { output } */}
+        {/* </AvatarProvider> */}
       </BrowserRouter>
     </div>
   );

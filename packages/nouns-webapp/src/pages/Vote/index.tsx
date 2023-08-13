@@ -10,7 +10,7 @@ import {
 } from '../../wrappers/nounsDao';
 import { useUserVotesAsOfBlock } from '../../wrappers/nounToken';
 import classes from './Vote.module.css';
-import { RouteComponentProps } from 'react-router-dom';
+// import { RouteComponentProps } from 'react-router-dom';
 import { TransactionStatus, useBlockNumber, useEthers } from '@usedapp/core';
 import { AlertModal, setAlertModal } from '../../state/slices/application';
 import dayjs from 'dayjs';
@@ -51,10 +51,15 @@ dayjs.extend(advanced);
 
 const VotePage = ({
   match: {
-    params: { id },
+    // params: { id },
   },
-}: RouteComponentProps<{ id: string }>) => {
-  const proposal = useProposal(id);
+}
+// : RouteComponentProps<{ id: string }>
+) => {
+  const proposal = useProposal(
+    '1'
+    //id
+    );
   const { account } = useEthers();
 
   const [showVoteModal, setShowVoteModal] = useState<boolean>(false);
@@ -80,7 +85,9 @@ const VotePage = ({
     data: dqInfo,
     loading: loadingDQInfo,
     error: dqError,
-  } = useQuery(propUsingDynamicQuorum(id ?? '0'));
+  } = useQuery(propUsingDynamicQuorum(
+    //id
+    '1' ?? '0'));
 
   const { queueProposal, queueProposalState } = useQueueProposal();
   const { executeProposal, executeProposalState } = useExecuteProposal();
