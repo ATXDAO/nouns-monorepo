@@ -51,8 +51,11 @@ export const cacheKey = (bucket: CacheBucket, ...parts: (string | number)[]) => 
   return [bucket.name, bucket.version, ...parts].join('-').toLowerCase();
 };
 
-export const CHAIN_ID: SupportedChains =  parseInt(process.env.REACT_APP_CHAIN_ID ?? '1');
-const INFURA_PROJECT_ID = process.env.REACT_APP_INFURA_PROJECT_ID ?? '2dd05b4bb4b6476cb6bc714808ddb098';
+console.log('process.env', process.env);
+export const CHAIN_ID: SupportedChains = parseInt(process.env.REACT_APP_CHAIN_ID ?? '1');
+export const ENVIRONMENT = process.env.NODE_ENV ?? 'production';
+const INFURA_PROJECT_ID =
+  process.env.REACT_APP_INFURA_PROJECT_ID ?? '2dd05b4bb4b6476cb6bc714808ddb098';
 
 export const ETHERSCAN_API_KEY = process.env.REACT_APP_ETHERSCAN_API_KEY ?? '';
 
@@ -122,7 +125,7 @@ const externalAddresses: Record<SupportedChains, ExternalContractAddresses> = {
     nounsStreamFactory: '0x0fd206FC7A7dBcD5661157eDCb1FFDD0D02A61ff',
     atxDaoAddress: '0x63f8F23ce0f3648097447622209E95A391c44b00',
     repTokensAddress: undefined,
-    atxDaoTreasury: '0x407Cf0e5Dd3C2c4bCE5a32B92109c2c6f7f1ce23'
+    atxDaoTreasury: '0x407Cf0e5Dd3C2c4bCE5a32B92109c2c6f7f1ce23',
   },
   [ChainId.Polygon]: {
     lidoToken: '0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84',
@@ -134,8 +137,8 @@ const externalAddresses: Record<SupportedChains, ExternalContractAddresses> = {
     weth: '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2',
     nounsStreamFactory: '0x0fd206FC7A7dBcD5661157eDCb1FFDD0D02A61ff',
     atxDaoAddress: undefined,
-    repTokensAddress: "0x57AA5fd0914A46b8A426cC33DB842D1BB1aeADa2",
-    atxDaoTreasury: undefined
+    repTokensAddress: '0x57AA5fd0914A46b8A426cC33DB842D1BB1aeADa2',
+    atxDaoTreasury: undefined,
   },
   [ChainId.Hardhat]: {
     lidoToken: undefined,
@@ -148,7 +151,7 @@ const externalAddresses: Record<SupportedChains, ExternalContractAddresses> = {
     nounsStreamFactory: undefined,
     atxDaoAddress: '0x0B306BF915C4d645ff596e518fAf3F9669b97016',
     repTokensAddress: '0x959922bE3CAee4b8Cd9a407cc3ac1C251C2007B1',
-    atxDaoTreasury: undefined
+    atxDaoTreasury: undefined,
   },
 };
 
@@ -156,7 +159,6 @@ const getAddresses = (): ContractAddresses => {
   let nounsAddresses = {} as NounsContractAddresses;
   try {
     nounsAddresses = getContractAddressesForChainOrThrow(CHAIN_ID);
-
   } catch {}
   return { ...nounsAddresses, ...externalAddresses[CHAIN_ID] };
 };
@@ -164,6 +166,8 @@ const getAddresses = (): ContractAddresses => {
 const config = {
   app: app[CHAIN_ID],
   addresses: getAddresses(),
+  chainId: CHAIN_ID,
+  environment: ENVIRONMENT,
 };
 
 export default config;

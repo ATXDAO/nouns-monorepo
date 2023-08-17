@@ -44,41 +44,23 @@ function App() {
 
   const alertModal = useAppSelector(state => state.application.alertModal);
 
-  let { balance, isLoading }  = useGetBalance(account!);
-
-  // const { useGetBalance2 } = useGetBalance();
-  // let bl = useGetBalance2(account!);
-
-
-  // let balanceArr = useNFTCall2('balanceOf', [account]);
-  // let balance = 0;
-  // if (balanceArr !== undefined) {
-  //   balance = balanceArr[0].toNumber();
-  // }
-
-
-
-  // const [balanceState, setBalanceState] = useState(0);
-
-  // let balanceArr = useNFTCall('balanceOf', [account]);
-  // let balance = 0;
-  // if (balanceArr !== undefined) {
-  //   balance = balanceArr[0].toNumber();
-  // }
+  let { balance, isLoading } = useGetBalance(account!);
 
   let output;
   if (account !== null) {
     //return to > 0 after testing
-    if (balance > 0) {
-      output = <div>
-      <Switch>
-        <Route exact path="/" component={AuctionPage} />
-        <Route exact path="/rep" component={RepPage} />
-        <Route exact path="/vote" component={GovernancePage} />
-        <Route component={NotFoundPage} />
-      </Switch>
-      <Footer />
-      </div>
+    if (balance > 0 || config.environment !== 'production') {
+      output = (
+        <div>
+          <Switch>
+            <Route exact path="/" component={AuctionPage} />
+            <Route exact path="/rep" component={RepPage} />
+            <Route exact path="/vote" component={GovernancePage} />
+            <Route component={NotFoundPage} />
+          </Switch>
+          <Footer />
+        </div>
+      );
     }
   }
 
@@ -94,11 +76,11 @@ function App() {
       )}
       <BrowserRouter>
         <AvatarProvider
-          provider={(chainId === ChainId.Mainnet ? library : undefined)}
+          provider={chainId === ChainId.Mainnet ? library : undefined}
           batchLookups={true}
         >
           <NavBar />
-          { output }
+          {output}
         </AvatarProvider>
       </BrowserRouter>
     </div>
