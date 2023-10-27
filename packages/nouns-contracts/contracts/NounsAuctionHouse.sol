@@ -198,6 +198,16 @@ contract NounsAuctionHouse is INounsAuctionHouse, PausableUpgradeable, Reentranc
      * @notice Set the auction target price.
      * @dev Only callable by the owner.
      */
+    function setTargetPrice(uint256 _targetPrice) external override onlyOwner {
+        targetPrice = _targetPrice;
+
+        emit AuctionTargetPriceUpdated(_targetPrice);
+    }
+
+    /**
+     * @notice Set the auction target price.
+     * @dev Only callable by the owner.
+     */
     function setTargetPrice(uint256 _targetPrice) external onlyOwner {
         targetPrice = _targetPrice;
     }
