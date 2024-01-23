@@ -12,9 +12,44 @@ import { CHAIN_ID, IS_MAINNET, IS_OPTIMISM_MAINNET } from '../../config';
 import { useEthers } from '@usedapp/core';
 import optimismImage from '../../assets/optimism.png';
 import polygonImage from '../../assets/polygon.png';
+import WalletConnectButton from '../../components/NavWallet/WalletConnectButton';
+import navDropdownClasses from '../../components/NavWallet/NavBarDropdown.module.css';
+import clsx from 'clsx';
+import WalletConnectModal from '../../components/WalletConnectModal';
+import { usePickByState } from '../../utils/colorResponsiveUIUtils';
+import { NavBarButtonStyle } from '../../components/NavBarButton';
+import { useHistory } from 'react-router-dom';
 
 const RepPage = () => {
   const activeAccount = useAppSelector(state => state.account.activeAccount);
+  const [showConnectModal, setShowConnectModal] = useState(false);
+  const setModalStateHandler = (state: boolean) => {
+    setShowConnectModal(state);
+  };
+
+  const history = useHistory();
+
+  const connectWalletButtonStyle = usePickByState(
+    NavBarButtonStyle.WHITE_WALLET,
+    NavBarButtonStyle.COOL_WALLET,
+    NavBarButtonStyle.WARM_WALLET,
+    history,
+  );
+  
+
+  // const switchWalletHandler = () => {
+  //   setShowConnectModal(false);
+  //   setButtonUp(false);
+  //   deactivate();
+  //   setShowConnectModal(false);
+  //   setShowConnectModal(true);
+  // };
+
+  // const disconectWalletHandler = () => {
+  //   setShowConnectModal(false);
+  //   setButtonUp(false);
+  //   deactivate();
+  // };
 
   const [json0Name, setJson0Name] = useState();
   const [json1Name, setJson1Name] = useState('');
@@ -66,25 +101,58 @@ const RepPage = () => {
         }
       } 
     }
-  } else {
-    loadingOutput = <div>
-          <h3>Please login to see your balance!</h3>
-        </div>;
-  }
 
-
-  if (desiredNetworkName !== undefined) {
-    loadingOutput = 
-      <div>
-        <h3>Please change your network to {desiredNetworkName}!</h3>
-        <h6><button style={{width:200}} onClick={()=> { desiredNetworkSwitchAction();}}>Switch</button></h6>
-      </div>
-  } else {
+    if (desiredNetworkName !== undefined) {
       loadingOutput = 
         <div>
-          <h3>Please be patient, the hamsters are trying their best..</h3>
+          <h3>Please change your network to {desiredNetworkName}!</h3>
+          <h6><button style={{width:200}} onClick={()=> { desiredNetworkSwitchAction();}}>Switch</button></h6>
+        </div>
+    } 
+  } else {
+    loadingOutput = <div>
+          {/* <h3>Please login to see your balance!</h3> */}
+          {
+            showConnectModal && activeAccount === undefined && (
+            <WalletConnectModal onDismiss={() => setModalStateHandler(false)} />
+            )
+          }
+          {activeAccount ? (<></>) : (
+            <WalletConnectButton
+              displayText='View Rep Tokens'
+              className={clsx(navDropdownClasses.nounsNavLink, navDropdownClasses.connectBtn)}
+              onClickHandler={() => setModalStateHandler(true)}
+              buttonStyle={connectWalletButtonStyle}
+            />
+          )}
         </div>;
   }
+
+  // if (desiredNetworkName !== undefined) {
+  //   loadingOutput = 
+  //     <div>
+  //       <h3>Please change your network to {desiredNetworkName}!</h3>
+  //       <h6><button style={{width:200}} onClick={()=> { desiredNetworkSwitchAction();}}>Switch</button></h6>
+  //     </div>
+  // } else {
+
+  //   loadingOutput = <div>
+  //         {/* <h3>Please login to see your balance!</h3> */}
+  //         {
+  //           showConnectModal && activeAccount === undefined && (
+  //           <WalletConnectModal onDismiss={() => setModalStateHandler(false)} />
+  //           )
+  //         }
+  //         {activeAccount ? (<></>) : (
+  //           <WalletConnectButton
+  //             displayText='View Rep Tokens'
+  //             className={clsx(navDropdownClasses.nounsNavLink, navDropdownClasses.connectBtn)}
+  //             onClickHandler={() => setModalStateHandler(true)}
+  //             buttonStyle={connectWalletButtonStyle}
+  //           />
+  //         )}
+  //       </div>;
+  // }
 
   const balanceOf0 = useRepCall('balanceOf', [activeAccount, 0]);
   const balanceOf1 = useRepCall('balanceOf', [activeAccount, 1]);

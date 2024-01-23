@@ -260,6 +260,7 @@ const NavWallet: React.FC<NavWalletProps> = props => {
         </>
       ) : (
         <WalletConnectButton
+          displayText='Connect'
           className={clsx(navDropdownClasses.nounsNavLink, navDropdownClasses.connectBtn)}
           onClickHandler={() => setModalStateHandler(true)}
           buttonStyle={connectWalletButtonStyle}
