@@ -17,6 +17,12 @@ import SettleManuallyBtn from '../SettleManuallyBtn';
 import { Trans } from '@lingui/macro';
 import { useActiveLocale } from '../../hooks/useActivateLocale';
 import responsiveUiUtilsClasses from '../../utils/ResponsiveUIUtils.module.css';
+import WalletConnectButton from '../../components/NavWallet/WalletConnectButton';
+import navDropdownClasses from '../../components/NavWallet/NavBarDropdown.module.css';
+import clsx from 'clsx';
+import { usePickByState } from '../../utils/colorResponsiveUIUtils';
+import { NavBarButtonStyle } from '../../components/NavBarButton';
+import { useHistory } from 'react-router-dom';
 
 const computeMinimumNextBid = (
   currentBid: BigNumber,
@@ -58,18 +64,82 @@ const Bid: React.FC<{
     config.addresses.nounsAuctionHouseProxy,
   );
 
+  const [showConnectModal, setShowConnectModal] = useState(false);
+
+
+
+
+
+
+
+
+
   const account = useAppSelector(state => state.account.activeAccount);
 
   const bidInputRef = useRef<HTMLInputElement>(null);
 
   const [bidInput, setBidInput] = useState('');
 
+  const setModalStateHandler = (state: boolean) => {
+    setShowConnectModal(state);
+  };
+
+  const history = useHistory();
+
+  const connectWalletButtonStyle = usePickByState(
+    NavBarButtonStyle.WHITE_WALLET,
+    NavBarButtonStyle.COOL_WALLET,
+    NavBarButtonStyle.WARM_WALLET,
+    history,
+  );
+  
+
+  // let placeBidContent: JSX.Element;
+
+  // let connectModal = showConnectModal && activeAccount === undefined && (
+  //   <WalletConnectModal onDismiss={() => setModalStateHandler(false)} />
+  // )
+
+  // if (activeAccount) {
+  //   placeBidContent = <>
+  //     <Trans>Place bid</Trans>
+  //   </>
+  // } else {
+  //   placeBidContent = <div>
+  //   {
+  //     showConnectModal && activeAccount === undefined && (
+  //     <WalletConnectModal onDismiss={() => setModalStateHandler(false)} />
+  //     )
+  //   }
+  //   {activeAccount ? (<></>) : (
+  //     <WalletConnectButton
+  //       displayText='View Rep Tokens'
+  //       className={clsx(navDropdownClasses.nounsNavLink, navDropdownClasses.connectBtn)}
+  //       onClickHandler={() => setModalStateHandler(true)}
+  //       buttonStyle={connectWalletButtonStyle}
+  //     />
+  //   )}
+  // </div>;
+  // }
+  
+  // {activeAccount ? (
+  //   placeBidContent = <>
+  //     <Trans>Place bid</Trans>
+  //   </>
+  // ) : (
+  //   placeBidContent = <WalletConnectButton
+  //   displayText='View Rep Tokens'
+  //   className={clsx(navDropdownClasses.nounsNavLink, navDropdownClasses.connectBtn)}
+  //   onClickHandler={() => setModalStateHandler(true)}
+  //   buttonStyle={connectWalletButtonStyle}
+  // />
+  // )}
+
   const [bidButtonContent, setBidButtonContent] = useState({
     loading: false,
     content: auctionEnded ? <Trans>Settle</Trans> : <Trans>Place bid</Trans>,
   });
 
-  const [showConnectModal, setShowConnectModal] = useState(false);
 
   const hideModalHandler = () => {
     setShowConnectModal(false);
@@ -170,10 +240,14 @@ const Bid: React.FC<{
   useEffect(() => {
     switch (!auctionEnded && placeBidState.status) {
       case 'None':
-        setBidButtonContent({
+        activeAccount ? setBidButtonContent({
           loading: false,
           content: <Trans>Place bid</Trans>,
+        }) : setBidButtonContent({
+          loading: false,
+          content: <Trans>Login to Place Bid</Trans>,
         });
+        
         break;
       case 'Mining':
         setBidButtonContent({ loading: true, content: <></> });
@@ -195,15 +269,18 @@ const Bid: React.FC<{
         setBidButtonContent({ loading: false, content: <Trans>Bid</Trans> });
         break;
     }
-  }, [placeBidState, auctionEnded, setModal]);
+  }, [placeBidState, auctionEnded, activeAccount, setModal]);
 
   // settle auction transaction state hook
   useEffect(() => {
     switch (auctionEnded && settleAuctionState.status) {
       case 'None':
-        setBidButtonContent({
+        activeAccount ? setBidButtonContent({
           loading: false,
           content: <Trans>Settle Auction</Trans>,
+        }) : setBidButtonContent({
+          loading: false,
+          content: <Trans>Login to Settle Auction</Trans>,
         });
         break;
       case 'Mining':
@@ -239,7 +316,7 @@ const Bid: React.FC<{
   if (!auction) return null;
 
   const isDisabled =
-    placeBidState.status === 'Mining' || settleAuctionState.status === 'Mining' || !activeAccount;
+    placeBidState.status === 'Mining' || settleAuctionState.status === 'Mining';// || !activeAccount;
 
   const fomoNounsBtnOnClickHandler = () => {
     // Open Fomo Nouns in a new tab
@@ -247,6 +324,17 @@ const Bid: React.FC<{
   };
 
   const isWalletConnected = activeAccount !== undefined;
+
+  const loginHandler = () => {
+    setShowConnectModal(true);
+  }
+
+  let placeBidAction;
+  if (!activeAccount) {
+    placeBidAction = loginHandler;
+  } else {
+    placeBidAction = auctionEnded ? settleAuctionHandler : placeBidHandler;
+  }
 
   return (
     <>
@@ -283,17 +371,32 @@ const Bid: React.FC<{
           </>
         )}
         {!auctionEnded ? (
+          
+          
+          
+          
           <Button
             className={auctionEnded ? classes.bidBtnAuctionEnded : classes.bidBtn}
-            onClick={auctionEnded ? settleAuctionHandler : placeBidHandler}
-            disabled={isDisabled}
+            onClick={placeBidAction}
+            // disabled={isDisabled}
           >
             {bidButtonContent.loading ? <Spinner animation="border" /> : bidButtonContent.content}
           </Button>
+
+
+
+
+
+
+
+
+
+
+
         ) : (
           <>
             <Col lg={12} className={classes.voteForNextNounBtnWrapper}>
-              <Button className={classes.bidBtnAuctionEnded} onClick={settleAuctionHandler}>
+              <Button className={classes.bidBtnAuctionEnded} onClick={activeAccount ? settleAuctionHandler : loginHandler }>
                 <Trans>Settle Auction</Trans> ⌐◧-◧
               </Button>
             </Col>

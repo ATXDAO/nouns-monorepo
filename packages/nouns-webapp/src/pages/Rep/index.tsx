@@ -111,7 +111,6 @@ const RepPage = () => {
     } 
   } else {
     loadingOutput = <div>
-          {/* <h3>Please login to see your balance!</h3> */}
           {
             showConnectModal && activeAccount === undefined && (
             <WalletConnectModal onDismiss={() => setModalStateHandler(false)} />
