@@ -11,7 +11,7 @@ import { useAuctionMinBidIncPercentage } from '../../wrappers/nounsAuction';
 import { useAppDispatch } from '../../hooks';
 import { AlertModal, setAlertModal } from '../../state/slices/application';
 import { NounsAuctionHouseFactory } from '@nouns/sdk';
-import config from '../../config';
+import config, { CHAIN_ID } from '../../config';
 import WalletConnectModal from '../WalletConnectModal';
 import SettleManuallyBtn from '../SettleManuallyBtn';
 import { Trans } from '@lingui/macro';
@@ -23,6 +23,7 @@ import clsx from 'clsx';
 import { usePickByState } from '../../utils/colorResponsiveUIUtils';
 import { NavBarButtonStyle } from '../../components/NavBarButton';
 import { useHistory } from 'react-router-dom';
+import { switchNetworkToEthereum, switchNetworkToGoerli, switchNetworkToOPMainnet } from '../../pages/utils/NetworkSwitcher';
 
 const computeMinimumNextBid = (
   currentBid: BigNumber,
@@ -38,7 +39,7 @@ const computeMinimumNextBid = (
 
 const minBidEth = (minBid: BigNumber): string => {
   if (minBid.isZero()) {
-    return '0.01';
+    return '0.00512';
   }
 
   const eth = utils.formatEther(EthersBN.from(minBid.toString()));
@@ -69,6 +70,7 @@ const Bid: React.FC<{
 
 
 
+  const { chainId } = useEthers();
 
 
 
@@ -330,10 +332,34 @@ const Bid: React.FC<{
   }
 
   let placeBidAction;
+  let settleAuctionAction;
+
   if (!activeAccount) {
     placeBidAction = loginHandler;
+    settleAuctionAction = loginHandler;
+
   } else {
-    placeBidAction = auctionEnded ? settleAuctionHandler : placeBidHandler;
+
+    console.log(chainId);
+    console.log(CHAIN_ID);
+
+    if (chainId !== CHAIN_ID) {
+      console.log("NOT EQUAL");
+
+      if (CHAIN_ID === 5) {
+        placeBidAction = switchNetworkToGoerli;
+        settleAuctionAction = switchNetworkToGoerli;  
+      } else if (CHAIN_ID === 1) {
+        placeBidAction = switchNetworkToOPMainnet;
+        settleAuctionAction = switchNetworkToEthereum;  
+      }
+      
+    } else {
+      console.log("EQUAL");
+
+      placeBidAction = auctionEnded ? settleAuctionHandler : placeBidHandler;
+      settleAuctionAction = activeAccount ? settleAuctionHandler : loginHandler;
+    }
   }
 
   return (
@@ -396,7 +422,7 @@ const Bid: React.FC<{
         ) : (
           <>
             <Col lg={12} className={classes.voteForNextNounBtnWrapper}>
-              <Button className={classes.bidBtnAuctionEnded} onClick={activeAccount ? settleAuctionHandler : loginHandler }>
+              <Button className={classes.bidBtnAuctionEnded} onClick={settleAuctionAction }>
                 <Trans>Settle Auction</Trans> ⌐◧-◧
               </Button>
             </Col>
