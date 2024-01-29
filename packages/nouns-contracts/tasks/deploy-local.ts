@@ -22,7 +22,7 @@ interface Contract {
 }
 
 task('deploy-local', 'Deploy contracts to hardhat')
-  .addOptionalParam('noundersdao', 'The nounders DAO contract address')
+  .addOptionalParam('noundersdao', 'The nounders DAO contract address', "0x407Cf0e5Dd3C2c4bCE5a32B92109c2c6f7f1ce23", types.string)
   .addOptionalParam('auctionTimeBuffer', 'The auction time buffer (seconds)', 30, types.int) // Default: 30 seconds
   .addOptionalParam('auctionReservePrice', 'The auction reserve price (wei)', 5120000000000000, types.int) // Default: 1 wei
   .addOptionalParam(
