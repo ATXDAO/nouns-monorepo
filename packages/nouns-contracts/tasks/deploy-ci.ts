@@ -1,6 +1,5 @@
 import fs from 'fs';
 import { task } from 'hardhat/config';
-import { types } from 'hardhat/config';
 
 task('deploy-ci', 'Deploy contracts (automated by CI)')
   .addOptionalParam('noundersdao', 'The nounders DAO contract address')
