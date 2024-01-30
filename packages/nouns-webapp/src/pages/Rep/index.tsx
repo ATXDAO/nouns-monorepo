@@ -19,6 +19,7 @@ import WalletConnectModal from '../../components/WalletConnectModal';
 import { usePickByState } from '../../utils/colorResponsiveUIUtils';
 import { NavBarButtonStyle } from '../../components/NavBarButton';
 import { useHistory } from 'react-router-dom';
+import config, {ENVIRONMENT_TYPE } from '../../config';
 
 const RepPage = () => {
   const activeAccount = useAppSelector(state => state.account.activeAccount);
@@ -36,21 +37,6 @@ const RepPage = () => {
     history,
   );
   
-
-  // const switchWalletHandler = () => {
-  //   setShowConnectModal(false);
-  //   setButtonUp(false);
-  //   deactivate();
-  //   setShowConnectModal(false);
-  //   setShowConnectModal(true);
-  // };
-
-  // const disconectWalletHandler = () => {
-  //   setShowConnectModal(false);
-  //   setButtonUp(false);
-  //   deactivate();
-  // };
-
   const [json0Name, setJson0Name] = useState();
   const [json1Name, setJson1Name] = useState('');
   const [json0Description, setJson0Description] = useState('');
@@ -62,53 +48,61 @@ const RepPage = () => {
 
   let loadingOutput;
 
-  // console.log(IS_OPTIMISM_MAINNET);
-
-  console.log(activeAccount);
-
+  let poweredBySection;
   let desiredNetworkName;
   let desiredNetworkSwitchAction: ()=> Promise<void>;
+  let desiredNetworkId;
+  
+  if (ENVIRONMENT_TYPE === "Mainnet") { 
+    poweredBySection = 
+    <>
+      <span>Powered by 
+        <a 
+          href= "https://polygon.technology/"
+          target="#"
+        >
+          <img 
+            src={ polygonImage } 
+            style={{width: '5%', height: '5%'}}
+            alt= "Polygon" />
+        </a>
+      </span>
+      <a 
+        href= "https://polygonscan.com/address/0x57AA5fd0914A46b8A426cC33DB842D1BB1aeADa2"
+        target="#"
+      >
+        PolygonScan: Reputation Tokens
+      </a>
+      {/* <a 
+        href= "??????????" 
+        target="#"
+      >
+        "PolygonScan: Cadent Reputation Distributor" 
+      </a> */}
+    </>;
+
+
+    desiredNetworkId = 137;
+    desiredNetworkName = "Polygon";
+    desiredNetworkSwitchAction = switchNetworkToPolygon.bind(switchNetworkToPolygon);
+  } else if (ENVIRONMENT_TYPE === "Testnet") { 
+    desiredNetworkId = 5;
+    desiredNetworkName = "Goerli";
+    desiredNetworkSwitchAction = switchNetworkToGoerli.bind(switchNetworkToGoerli);
+  }  else if (ENVIRONMENT_TYPE === "Localhost") {
+    desiredNetworkId = 31337;
+    desiredNetworkName = "Localhost";
+    desiredNetworkSwitchAction = switchNetworkToLocalhost.bind(switchNetworkToLocalhost);
+  }
 
   if (activeAccount) {
-    if (IS_MAINNET) {
-      if (IS_OPTIMISM_MAINNET) {
-        if (chainId !== CHAIN_ID) {
-          desiredNetworkName = "OP Mainnet";
-          desiredNetworkSwitchAction = switchNetworkToOPMainnet.bind(switchNetworkToOPMainnet);
-        }
-      }
-      else {
-        if (chainId !== CHAIN_ID) {
-          if (CHAIN_ID === 137) {
-            desiredNetworkName = "Polygon";
-            desiredNetworkSwitchAction = switchNetworkToPolygon.bind(switchNetworkToPolygon);
-          }
-          else if (CHAIN_ID === 1) {
-            desiredNetworkName = "Ethereum";
-            desiredNetworkSwitchAction = switchNetworkToEthereum.bind(switchNetworkToEthereum);
-          }
-        }
-      }
-    } else {
-      if (chainId !== CHAIN_ID) {
-        if (CHAIN_ID === 5) {
-          desiredNetworkName = "Goerli";
-          desiredNetworkSwitchAction = switchNetworkToGoerli.bind(switchNetworkToGoerli);
-        }
-        else if (CHAIN_ID === 31337) {
-          desiredNetworkName = "Localhost";
-          desiredNetworkSwitchAction = switchNetworkToLocalhost.bind(switchNetworkToLocalhost);
-        }
-      } 
-    }
-
-    if (desiredNetworkName !== undefined) {
-      loadingOutput = 
+      if (chainId !== desiredNetworkId) {
+        loadingOutput = 
         <div>
           <h3>Please change your network to {desiredNetworkName}!</h3>
           <h6><button style={{width:200}} onClick={()=> { desiredNetworkSwitchAction();}}>Switch</button></h6>
         </div>
-    } 
+      }
   } else {
     loadingOutput = <div>
           {
@@ -127,36 +121,10 @@ const RepPage = () => {
         </div>;
   }
 
-  // if (desiredNetworkName !== undefined) {
-  //   loadingOutput = 
-  //     <div>
-  //       <h3>Please change your network to {desiredNetworkName}!</h3>
-  //       <h6><button style={{width:200}} onClick={()=> { desiredNetworkSwitchAction();}}>Switch</button></h6>
-  //     </div>
-  // } else {
-
-  //   loadingOutput = <div>
-  //         {/* <h3>Please login to see your balance!</h3> */}
-  //         {
-  //           showConnectModal && activeAccount === undefined && (
-  //           <WalletConnectModal onDismiss={() => setModalStateHandler(false)} />
-  //           )
-  //         }
-  //         {activeAccount ? (<></>) : (
-  //           <WalletConnectButton
-  //             displayText='View Rep Tokens'
-  //             className={clsx(navDropdownClasses.nounsNavLink, navDropdownClasses.connectBtn)}
-  //             onClickHandler={() => setModalStateHandler(true)}
-  //             buttonStyle={connectWalletButtonStyle}
-  //           />
-  //         )}
-  //       </div>;
-  // }
-
-  const balanceOf0 = useRepCall('balanceOf', [activeAccount, 0]);
-  const balanceOf1 = useRepCall('balanceOf', [activeAccount, 1]);
-  const uri0 = useRepCall('uri', [0]);
-  const uri1 = useRepCall('uri', [1]);
+  const balanceOf0 = useRepCall('balanceOf', [activeAccount, 0], config.chainAgnosticAddresses.repTokensAddress);
+  const balanceOf1 = useRepCall('balanceOf', [activeAccount, 1], config.chainAgnosticAddresses.repTokensAddress);
+  const uri0 = useRepCall('uri', [0], config.chainAgnosticAddresses.repTokensAddress);
+  const uri1 = useRepCall('uri', [1], config.chainAgnosticAddresses.repTokensAddress);
 
   if (uri0 !== undefined && uri1 !== undefined) {
     let finalURL0 = uri0![0].replace("ipfs://", "https://ipfs.io/ipfs/");
@@ -177,10 +145,10 @@ const RepPage = () => {
     getJsonData();
   }
 
-  const { send } = useCadentFunction('Claim', 'claim', []);
+  const { send } = useCadentFunction('Claim', 'claim', [], config.chainAgnosticAddresses.cadentDistributorAddress);
   
-  const remainingTime = useCadentCall('getRemainingTime', [activeAccount]);
-  const amountPerCadence = useCadentCall('getAmountToDistributePerCadence', []);
+  const remainingTime = useCadentCall('getRemainingTime', [activeAccount], config.chainAgnosticAddresses.cadentDistributorAddress);
+  const amountPerCadence = useCadentCall('getAmountToDistributePerCadence', [], config.chainAgnosticAddresses.cadentDistributorAddress);
 
   let canClaimConditional;
 
@@ -299,31 +267,9 @@ const RepPage = () => {
               <div>{ loadingOutput }</div>
             }
           </Row>
-            <span>Powered by 
-              <a 
-                href= { IS_OPTIMISM_MAINNET ? "https://www.optimism.io/" : "https://polygon.technology/" } 
-                target="#"
-              >
-                <img 
-                  src={ IS_OPTIMISM_MAINNET ? optimismImage : polygonImage } 
-                  style={{width: '5%', height: '5%'}}
-                  alt= { IS_OPTIMISM_MAINNET ? "Optimism" : "Polygon" } />
-              </a>
-            </span>
-
-            <a 
-              href= { IS_OPTIMISM_MAINNET ? "https://optimistic.etherscan.io/address/0x65ad2263e658e75762253076e2ebfc9211e05d2f" : "https://polygonscan.com/address/0x57AA5fd0914A46b8A426cC33DB842D1BB1aeADa2" }
-              target="#"
-            >
-              { IS_OPTIMISM_MAINNET ? "OptimismScan: Reputation Tokens" : "PolygonScan: Reputation Tokens" }
-            </a>
-            <a 
-              href= { IS_OPTIMISM_MAINNET ? "https://optimistic.etherscan.io/address/0x9816093cfdfeb1ade0b88b04f89310e1d8380637" : "??????????" }
-              target="#"
-            >
-              { IS_OPTIMISM_MAINNET ? "OptimismScan: Cadent Reputation Distributor" : "PolygonScan: Cadent Reputation Distributor" }
-            </a>
-
+          {
+            poweredBySection
+          }
         </Card>
       </Col>
 

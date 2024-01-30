@@ -6,7 +6,7 @@ import { Contract } from '@ethersproject/contracts'
 
 const abi = new utils.Interface(cadentRepDistributorABI);
 
-export const useCadentCall = (funcName: string, funcArgs: any[], address: string = config.addresses.cadentDistributorAddress!) => {
+export const useCadentCall = (funcName: string, funcArgs: any[], address: string | undefined) => {
     const result = useContractCall({
         abi: abi,
         address: address,
@@ -17,7 +17,7 @@ export const useCadentCall = (funcName: string, funcArgs: any[], address: string
     return result;
 }
 
-export const useCadentFunction = (prettyName: string, funcName: string, funcArgs: any[], address: string = config.addresses.cadentDistributorAddress!) => {
+export const useCadentFunction = (prettyName: string, funcName: string, funcArgs: any[], address: string | undefined) => {
     
     if (address === undefined) {
         address = "0x0000000000000000000000000000000000000000";
