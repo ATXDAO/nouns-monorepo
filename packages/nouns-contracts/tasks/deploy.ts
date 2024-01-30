@@ -52,6 +52,8 @@ task('deploy', 'Deploys NFTDescriptor, NounsDescriptor, NounsSeeder, and NounsTo
     60 /* 1 min */,
     types.int,
   )
+  .addOptionalParam('minDuration', 'The auction MINIMUM duration (seconds)', 60 * 60 * 24 * 30, types.int)
+  .addOptionalParam('maxDuration', 'The auction MAXIMUM duration (seconds)', 60 * 1, types.int)
   .addOptionalParam(
     'timelockDelay',
     'The timelock delay (seconds)',
@@ -161,6 +163,8 @@ task('deploy', 'Deploys NFTDescriptor, NounsDescriptor, NounsSeeder, and NounsTo
               args.auctionReservePrice,
               args.auctionMinIncrementBidPercentage,
               args.auctionDuration,
+              args.minDuration,
+              args.maxDuration
             ]),
         ],
         waitForConfirmation: true,
