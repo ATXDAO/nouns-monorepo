@@ -107,9 +107,9 @@ const NounderNounContent: React.FC<{
               .{' '}
               <Trans>
                 This means that the future of these ATX Nouns is up to the community to decide. 
-                A few examples include scholarships, competitions, giveaways, treasury swaps,
-                contributor rewards, or even selling on a secondary marketplace. These are just
-                example ideas to get your gears spinning. If you have another idea, propose it!
+                Possibilities include scholarships, competitions, giveaways, treasury swaps,
+                contributor rewards, or even selling on a secondary marketplace. If you have an
+                idea for what do with ATX Nouns in the treasury, propose it!
               </Trans>
             </li>
           </ul>
