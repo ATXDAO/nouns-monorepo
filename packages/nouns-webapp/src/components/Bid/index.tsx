@@ -11,7 +11,7 @@ import { useAuctionMinBidIncPercentage } from '../../wrappers/nounsAuction';
 import { useAppDispatch } from '../../hooks';
 import { AlertModal, setAlertModal } from '../../state/slices/application';
 import { NounsAuctionHouseFactory } from '@nouns/sdk';
-import config, { CHAIN_ID } from '../../config';
+import config, { CHAIN_ID, ENVIRONMENT_TYPE } from '../../config';
 import WalletConnectModal from '../WalletConnectModal';
 import SettleManuallyBtn from '../SettleManuallyBtn';
 import { Trans } from '@lingui/macro';
@@ -343,22 +343,19 @@ const Bid: React.FC<{
     console.log(chainId);
     console.log(CHAIN_ID);
 
-    if (chainId !== CHAIN_ID) {
-      console.log("NOT EQUAL");
-
-      if (CHAIN_ID === 5) {
-        placeBidAction = switchNetworkToGoerli;
-        settleAuctionAction = switchNetworkToGoerli;  
-      } else if (CHAIN_ID === 1) {
-        placeBidAction = switchNetworkToOPMainnet;
-        settleAuctionAction = switchNetworkToEthereum;  
+    if (ENVIRONMENT_TYPE === "Mainnet") {
+  
+      //When Prod is ready for ATX Nouns Mainnet, change this to whatever the selected chain is.
+      if (chainId !== 5) {
+      placeBidAction = switchNetworkToGoerli;
+      settleAuctionAction = switchNetworkToGoerli;  
       }
       
-    } else {
-      console.log("EQUAL");
-
-      placeBidAction = auctionEnded ? settleAuctionHandler : placeBidHandler;
-      settleAuctionAction = activeAccount ? settleAuctionHandler : loginHandler;
+    } else if (ENVIRONMENT_TYPE === "Testnet") {
+      if (chainId !== 5) {
+        placeBidAction = switchNetworkToGoerli;
+        settleAuctionAction = switchNetworkToGoerli;  
+        }
     }
   }
 
