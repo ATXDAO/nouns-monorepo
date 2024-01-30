@@ -100,16 +100,16 @@ const NounderNounContent: React.FC<{
                 ` ${nounContentClasses.bidRow}`
               }
             >
-              <Trans>All Noun auction proceeds are sent to the</Trans>{' '}
-              <Link to="/vote" className={nounContentClasses.link}>
-                <Trans>Nouns DAO</Trans>
+              <Trans>Every 10th ATX Noun is transferred to the </Trans>{' '}
+              <Link to="https://etherscan.io/tokenholdings?a=0x407Cf0e5Dd3C2c4bCE5a32B92109c2c6f7f1ce23" className={nounContentClasses.link}>
+                <Trans>ATX DAO Treasury</Trans>
               </Link>
               .{' '}
               <Trans>
-                For this reason, we, the project's founders (‘Nounders’) have chosen to compensate
-                ourselves with Nouns. Every 10th Noun for the first 5 years of the project will be
-                sent to our multisig (5/10), where it will be vested and distributed to individual
-                Nounders.
+                This means that the future of these ATX Nouns is up to the community to decide. 
+                A few examples include scholarships, competitions, giveaways, treasury swaps,
+                contributor rewards, or even selling on a secondary marketplace. These are just
+                example ideas to get your gears spinning. If you have another idea, propose it!
               </Trans>
             </li>
           </ul>
@@ -119,7 +119,7 @@ const NounderNounContent: React.FC<{
             }
           >
             <Link
-              to="/nounders"
+              to="/vote"
               className={isCool ? bidBtnClasses.bidHistoryCool : bidBtnClasses.bidHistoryWarm}
             >
               <Trans>Learn more</Trans> →
