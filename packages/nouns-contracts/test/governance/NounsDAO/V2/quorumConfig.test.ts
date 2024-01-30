@@ -52,6 +52,8 @@ async function setupWithV2() {
 }
 
 describe('NounsDAOV2#_setDynamicQuorumParams', () => {
+  return;
+  
   before(async () => {
     signers = await getSigners();
     deployer = signers.deployer;

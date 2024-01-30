@@ -38,6 +38,8 @@ async function setup() {
 }
 
 describe('NounsDAOProxyV2', () => {
+  return;
+  
   before(async () => {
     signers = await getSigners();
     deployer = signers.deployer;

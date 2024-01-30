@@ -65,6 +65,8 @@ const TIME_BUFFER = 15 * 60;
 const RESERVE_PRICE = 2;
 const MIN_INCREMENT_BID_PERCENTAGE = 5;
 const DURATION = 60 * 60 * 24;
+const MIN_DURATION = 60 * 60 * 24 * 30;
+const MAX_DURATION = 60 * 1;
 
 async function deploy() {
   [deployer, bidderA, wethDeployer, noundersDAO] = await ethers.getSigners();
@@ -91,6 +93,8 @@ async function deploy() {
     deployer.address, // do not know minter/auction house yet
   );
 
+
+
   // 2a. DEPLOY AuctionHouse
   const auctionHouseFactory = await ethers.getContractFactory('NounsAuctionHouse', deployer);
   const nounsAuctionHouseProxy = await upgrades.deployProxy(auctionHouseFactory, [
@@ -100,6 +104,8 @@ async function deploy() {
     RESERVE_PRICE,
     MIN_INCREMENT_BID_PERCENTAGE,
     DURATION,
+    MIN_DURATION,
+    MAX_DURATION
   ]);
 
   // 2b. CAST proxy as AuctionHouse

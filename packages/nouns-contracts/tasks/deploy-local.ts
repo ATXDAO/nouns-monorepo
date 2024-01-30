@@ -32,6 +32,8 @@ task('deploy-local', 'Deploy contracts to hardhat')
     types.int,
   )
   .addOptionalParam('auctionDuration', 'The auction duration (seconds)', 60 * 8, types.int) // Default: 4 minutes
+  .addOptionalParam('minDuration', 'The auction MINIMUM duration (seconds)', 60 * 60 * 24 * 30, types.int)
+  .addOptionalParam('maxDuration', 'The auction MAXIMUM duration (seconds)', 60 * 1, types.int)
   .addOptionalParam('timelockDelay', 'The timelock delay (seconds)', 60 * 60 * 24 * 2, types.int) // Default: 2 days
   .addOptionalParam('votingPeriod', 'The voting period (blocks)', 4 * 60 * 24 * 3, types.int) // Default: 3 days
   .addOptionalParam('votingDelay', 'The voting delay (blocks)', 1, types.int) // Default: 1 block
@@ -119,6 +121,8 @@ task('deploy-local', 'Deploy contracts to hardhat')
               args.auctionReservePrice,
               args.auctionMinIncrementBidPercentage,
               args.auctionDuration,
+              args.minDuration,
+              args.maxDuration
             ]),
         ],
       },
