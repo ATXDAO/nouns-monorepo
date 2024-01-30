@@ -102,7 +102,7 @@ const NounderNounContent: React.FC<{
             >
               <Trans>Every 10th ATX Noun is transferred to the </Trans>{' '}
               <a href="https://etherscan.io/tokenholdings?a=0x407Cf0e5Dd3C2c4bCE5a32B92109c2c6f7f1ce23" className={nounContentClasses.link}>
-              {ATX DAO Treasuy}
+                ATX DAO Treasury
               </a>
               .{' '}
               <Trans>
