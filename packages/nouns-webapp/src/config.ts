@@ -7,6 +7,11 @@ import { ethers } from 'ethers';
 
 export const WALLET_CONNECT_V2_PROJECT_ID = '501e80c0ce3d8633938fc821b41fabfd';
 
+interface ExternalChainAgnosticAddresses {
+  repTokensAddress: string | undefined;
+  cadentDistributorAddress: string | undefined;
+}
+
 interface ExternalContractAddresses {
   lidoToken: string | undefined;
   usdcToken: string | undefined;
@@ -58,6 +63,11 @@ export const IS_MAINNET: boolean = (process.env.REACT_APP_IS_MAINNET?.toLowerCas
 export const IS_OPTIMISM_MAINNET: boolean = (process.env.REACT_APP_IS_OPTIMISM_MAINNET?.toLowerCase() === 'true' ?? false);
 
 export const CHAIN_ID: SupportedChains =  parseInt(process.env.REACT_APP_CHAIN_ID ?? '1');
+
+console.log(process.env.REACT_APP_ENVIRONMENT_TYPE);
+
+export const ENVIRONMENT_TYPE: string = process.env.REACT_APP_ENVIRONMENT_TYPE ?? 'Mainnet';
+
 const INFURA_PROJECT_ID = '2dd05b4bb4b6476cb6bc714808ddb098';
 
 export const ETHERSCAN_API_KEY = process.env.REACT_APP_ETHERSCAN_API_KEY ?? '';
@@ -101,6 +111,23 @@ const app: Record<SupportedChains, AppConfig> = {
     enableHistory: process.env.REACT_APP_ENABLE_HISTORY === 'true',
   },
 };
+
+const externalChainAgnosticAddresses: Record<string, ExternalChainAgnosticAddresses> = {
+  ["Mainnet"]: {
+    repTokensAddress: '0x57AA5fd0914A46b8A426cC33DB842D1BB1aeADa2',
+    cadentDistributorAddress: undefined
+  },
+  ["Testnet"]: {
+    repTokensAddress: '0xF0535B9d8E98144BB4233fEdd252220d0152311E',
+    cadentDistributorAddress: '0x88F1Af751ca23BB2B4efF893d6f45D041230FFb3',
+
+  },
+  ["Localhost"]: {
+    repTokensAddress: '0x959922bE3CAee4b8Cd9a407cc3ac1C251C2007B1',
+    cadentDistributorAddress: '0x9A9f2CCfdE556A7E9Ff0848998Aa4a0CFD8863AE',
+
+  }
+}
 
 const externalAddresses: Record<SupportedChains, ExternalContractAddresses> = {
   [ChainId.Goerli]: {
@@ -172,9 +199,14 @@ const getAddresses = (): ContractAddresses => {
   return { ...nounsAddresses, ...externalAddresses[CHAIN_ID] };
 };
 
+const getChainAgnosticAddresses = (): ExternalChainAgnosticAddresses => {
+  return externalChainAgnosticAddresses[ENVIRONMENT_TYPE];
+};
+
 const config = {
   app: app[CHAIN_ID],
   addresses: getAddresses(),
+  chainAgnosticAddresses: getChainAgnosticAddresses()
 };
 
 export default config;

@@ -3,7 +3,7 @@ export async function switchNetworkToLocalhost() {
 }
 
 export async function switchNetworkToPolygon() {
-  await switchNetworkToChain('0x89', 'Polygon', ['https://polygon.llamarpc.com']);
+  await switchNetworkToChain('0x89', 'Polygon', ['https://polygon-rpc.com']);
 }
 
 export async function switchNetworkToEthereum() {
@@ -28,6 +28,12 @@ export async function switchNetworkToChain(chainIdHex: string, chainName: string
     // This error code indicates that the chain has not been added to MetaMask.
     if ((switchError as any).code === 4902) {
       try {
+        const nativeCurrency = {
+          name: "MATIC",
+          symbol: "MATIC",
+          decimals: 18,
+        };
+
         await (window as any).ethereum.request({
           method: 'wallet_addEthereumChain',
           params: [
@@ -35,6 +41,7 @@ export async function switchNetworkToChain(chainIdHex: string, chainName: string
               chainId: chainIdHex,
               chainName: chainName,
               rpcUrls: chainRpcUrls /* ... */,
+              nativeCurrency
             },
           ],
         });
