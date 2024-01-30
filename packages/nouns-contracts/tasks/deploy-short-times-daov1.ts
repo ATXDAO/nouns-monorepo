@@ -26,7 +26,7 @@ const GOVERNOR_N_DELEGATOR_NONCE_OFFSET = 12;
 task('deploy-short-times-daov1', 'Deploy all Nouns contracts with short gov times for testing')
   .addFlag('autoDeploy', 'Deploy all contracts without user interaction')
   .addOptionalParam('weth', 'The WETH contract address', undefined, types.string)
-  .addOptionalParam('noundersdao', 'The nounders DAO contract address', "0x407Cf0e5Dd3C2c4bCE5a32B92109c2c6f7f1ce23", types.string)
+  .addOptionalParam('noundersdao', 'The nounders DAO contract address')
   .addOptionalParam(
     'auctionTimeBuffer',
     'The auction time buffer (seconds)',

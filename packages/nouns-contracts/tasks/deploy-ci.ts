@@ -3,7 +3,7 @@ import { task } from 'hardhat/config';
 import { types } from 'hardhat/config';
 
 task('deploy-ci', 'Deploy contracts (automated by CI)')
-  .addOptionalParam('noundersdao', 'The nounders DAO contract address', "0x407Cf0e5Dd3C2c4bCE5a32B92109c2c6f7f1ce23", types.string)
+  .addOptionalParam('noundersdao', 'The nounders DAO contract address')
   .addOptionalParam(
     'weth',
     'The WETH contract address',
