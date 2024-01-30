@@ -28,9 +28,9 @@ pragma solidity ^0.8.6;
 // import { ReentrancyGuardUpgradeable } from '@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol';
 // import { OwnableUpgradeable } from '@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol';
 
-import { CustomPausableUpgradeable } from './CustomPausableUpgradeable.sol';
-import { CustomReentrancyGuardUpgradeable } from './CustomReentrancyGuardUpgradeable.sol';
-import { CustomOwnableUpgradeable } from './CustomOwnableUpgradeable.sol';
+import { CustomPausableUpgradeable } from './custom/CustomPausableUpgradeable.sol';
+import { CustomReentrancyGuardUpgradeable } from './custom/CustomReentrancyGuardUpgradeable.sol';
+import { CustomOwnableUpgradeable } from './custom/CustomOwnableUpgradeable.sol';
 
 import { IERC20 } from '@openzeppelin/contracts/token/ERC20/IERC20.sol';
 import { INounsAuctionHouse } from './interfaces/INounsAuctionHouse.sol';

@@ -69,8 +69,6 @@ describe('NounsAuctionHouse', () => {
     return auctionHouse as NounsAuctionHouse;
   }
 
-  return;
-
   before(async () => {
     [deployer, noundersDAO, bidderA, bidderB] = await ethers.getSigners();
 
@@ -93,25 +91,27 @@ describe('NounsAuctionHouse', () => {
     await ethers.provider.send('evm_revert', [snapshotId]);
   });
 
-  // it('should revert if a second initialization is attempted', async () => {
-  //   const tx = nounsAuctionHouse.initialize(
-  //     nounsToken.address,
-  //     weth.address,
-  //     TIME_BUFFER,
-  //     RESERVE_PRICE,
-  //     MIN_INCREMENT_BID_PERCENTAGE,
-  //     DURATION,
-  //   );
-  //   await expect(tx).to.be.revertedWith('Initializable: contract is already initialized');
-  // });
+  it('should revert if a second initialization is attempted', async () => {
+    const tx = nounsAuctionHouse.initialize(
+      nounsToken.address,
+      weth.address,
+      TIME_BUFFER,
+      RESERVE_PRICE,
+      MIN_INCREMENT_BID_PERCENTAGE,
+      DURATION,
+      MIN_DURATION,
+      MAX_DURATION
+    );
+    await expect(tx).to.be.revertedWith('Initializable: contract is already initialized');
+  });
 
-  // it('should allow the noundersDAO to unpause the contract and create the first auction', async () => {
-  //   const tx = await nounsAuctionHouse.unpause();
-  //   await tx.wait();
+  it('should allow the noundersDAO to unpause the contract and create the first auction', async () => {
+    const tx = await nounsAuctionHouse.unpause();
+    await tx.wait();
 
-  //   const auction = await nounsAuctionHouse.auction();
-  //   expect(auction.startTime.toNumber()).to.be.greaterThan(0);
-  // });
+    const auction = await nounsAuctionHouse.auction();
+    expect(auction.startTime.toNumber()).to.be.greaterThan(0);
+  });
 
   it('should revert if a user creates a bid for an inactive auction', async () => {
     await (await nounsAuctionHouse.unpause()).wait();

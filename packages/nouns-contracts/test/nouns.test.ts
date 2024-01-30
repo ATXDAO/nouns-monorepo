@@ -16,9 +16,6 @@ describe('NounsToken', () => {
   let noundersDAO: SignerWithAddress;
   let snapshotId: number;
 
-  return;
-
-  
   before(async () => {
     [deployer, noundersDAO] = await ethers.getSigners();
     nounsToken = await deployNounsToken(deployer, noundersDAO.address, deployer.address);
@@ -63,11 +60,11 @@ describe('NounsToken', () => {
   });
 
   it('should set symbol', async () => {
-    expect(await nounsToken.symbol()).to.eq('NOUN');
+    expect(await nounsToken.symbol()).to.eq('ATX');
   });
 
   it('should set name', async () => {
-    expect(await nounsToken.name()).to.eq('Nouns');
+    expect(await nounsToken.name()).to.eq('ATXNouns');
   });
 
   it('should allow minter to mint a noun to itself', async () => {
