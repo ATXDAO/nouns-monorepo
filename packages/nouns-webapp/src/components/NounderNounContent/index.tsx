@@ -101,9 +101,9 @@ const NounderNounContent: React.FC<{
               }
             >
               <Trans>Every 10th ATX Noun is transferred to the </Trans>{' '}
-              <Link to={{ pathname: "https://etherscan.io/tokenholdings", search: "?a=0x407Cf0e5Dd3C2c4bCE5a32B92109c2c6f7f1ce23" }} className={nounContentClasses.link}>
-                <Trans>ATX DAO Treasury</Trans>
-              </Link>
+              <a href="https://etherscan.io/tokenholdings?a=0x407Cf0e5Dd3C2c4bCE5a32B92109c2c6f7f1ce23" className={nounContentClasses.link}>
+              {ATX DAO Treasuy}
+              </a>
               .{' '}
               <Trans>
                 This means that the future of these ATX Nouns is up to the community to decide. 
