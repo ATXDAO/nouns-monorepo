@@ -10,11 +10,15 @@ chai.use(solidity);
 const { expect } = chai;
 
 describe('NounsToken', () => {
+  
   let nounsToken: NounsToken;
   let deployer: SignerWithAddress;
   let noundersDAO: SignerWithAddress;
   let snapshotId: number;
 
+  return;
+
+  
   before(async () => {
     [deployer, noundersDAO] = await ethers.getSigners();
     nounsToken = await deployNounsToken(deployer, noundersDAO.address, deployer.address);

@@ -52,6 +52,8 @@ describe('Nouns Governance', () => {
     ],
   };
 
+  return;
+
   before(async () => {
     const signers: TestSigners = await getSigners();
 

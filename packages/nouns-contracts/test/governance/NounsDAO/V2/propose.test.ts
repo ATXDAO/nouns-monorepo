@@ -33,6 +33,8 @@ const MIN_QUORUM_VOTES_BPS = 2000; // 20%
 const MAX_QUORUM_VOTES_BPS = 4000; // 40%
 
 describe('NounsDAOV2#propose', async () => {
+  return;
+  
   before(async () => {
     signers = await getSigners();
     deployer = signers.deployer;

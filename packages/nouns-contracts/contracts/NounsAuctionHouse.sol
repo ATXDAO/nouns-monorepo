@@ -24,15 +24,25 @@
 
 pragma solidity ^0.8.6;
 
-import { PausableUpgradeable } from '@openzeppelin/contracts-upgradeable/security/PausableUpgradeable.sol';
-import { ReentrancyGuardUpgradeable } from '@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol';
-import { OwnableUpgradeable } from '@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol';
+// import { PausableUpgradeable } from '@openzeppelin/contracts-upgradeable/security/PausableUpgradeable.sol';
+// import { ReentrancyGuardUpgradeable } from '@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol';
+// import { OwnableUpgradeable } from '@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol';
+
+import { CustomPausableUpgradeable } from './CustomPausableUpgradeable.sol';
+import { CustomReentrancyGuardUpgradeable } from './CustomReentrancyGuardUpgradeable.sol';
+import { CustomOwnableUpgradeable } from './CustomOwnableUpgradeable.sol';
+
 import { IERC20 } from '@openzeppelin/contracts/token/ERC20/IERC20.sol';
 import { INounsAuctionHouse } from './interfaces/INounsAuctionHouse.sol';
 import { INounsToken } from './interfaces/INounsToken.sol';
 import { IWETH } from './interfaces/IWETH.sol';
 
-contract NounsAuctionHouse is INounsAuctionHouse, PausableUpgradeable, ReentrancyGuardUpgradeable, OwnableUpgradeable {
+contract NounsAuctionHouse is
+    INounsAuctionHouse,
+    CustomPausableUpgradeable,
+    CustomReentrancyGuardUpgradeable,
+    CustomOwnableUpgradeable
+{
     // The Nouns ERC721 token contract
     INounsToken public nouns;
 
@@ -54,11 +64,8 @@ contract NounsAuctionHouse is INounsAuctionHouse, PausableUpgradeable, Reentranc
 
     // The duration of a single auction (s)
     uint256 public duration;
-    // uint256 public duration = 60 * 4;
-
-    uint256 public maxDuration = 60 * 1;
-
-    uint256 public minDuration = 60 * 60 * 24 * 30;
+    uint256 public minDuration;
+    uint256 public maxDuration;
 
     uint256[] public salePrices;
 
@@ -76,7 +83,9 @@ contract NounsAuctionHouse is INounsAuctionHouse, PausableUpgradeable, Reentranc
         uint256 _timeBuffer,
         uint256 _reservePrice,
         uint8 _minBidIncrementPercentage,
-        uint256 _duration
+        uint256 _duration,
+        uint256 _minDuration,
+        uint256 _maxDuration
     ) external initializer {
         __Pausable_init();
         __ReentrancyGuard_init();
@@ -90,6 +99,8 @@ contract NounsAuctionHouse is INounsAuctionHouse, PausableUpgradeable, Reentranc
         reservePrice = _reservePrice;
         minBidIncrementPercentage = _minBidIncrementPercentage;
         duration = _duration;
+        minDuration = _minDuration;
+        maxDuration = _maxDuration;
     }
 
     /**

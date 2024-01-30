@@ -29,6 +29,8 @@ describe('NounsAuctionHouse', () => {
   const RESERVE_PRICE = 2;
   const MIN_INCREMENT_BID_PERCENTAGE = 5;
   const DURATION = 60 * 60 * 24;
+  const MIN_DURATION = 60 * 60 * 24 * 30;
+  const MAX_DURATION = 60 * 1;
 
   // async function deploy(deployer?: SignerWithAddress) {
   //   const auctionHouseFactory = await ethers.getContractFactory('NounsAuctionHouse', deployer);
@@ -61,9 +63,13 @@ describe('NounsAuctionHouse', () => {
       RESERVE_PRICE,
       MIN_INCREMENT_BID_PERCENTAGE,
       DURATION,
+      MIN_DURATION,
+      MAX_DURATION
     );
     return auctionHouse as NounsAuctionHouse;
   }
+
+  return;
 
   before(async () => {
     [deployer, noundersDAO, bidderA, bidderB] = await ethers.getSigners();

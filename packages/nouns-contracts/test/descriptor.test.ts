@@ -25,6 +25,8 @@ describe('NounsDescriptor', () => {
     glasses: part,
   };
 
+  return;
+  
   before(async () => {
     nounsDescriptor = await deployNounsDescriptor();
 

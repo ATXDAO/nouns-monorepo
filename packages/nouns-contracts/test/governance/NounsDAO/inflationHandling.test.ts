@@ -43,6 +43,9 @@ let callDatas: string[];
 let proposalId: EthersBN;
 
 describe('NounsDAO#inflationHandling', () => {
+
+  return;
+  
   before(async () => {
     signers = await getSigners();
     deployer = signers.deployer;

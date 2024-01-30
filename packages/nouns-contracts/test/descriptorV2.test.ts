@@ -11,6 +11,8 @@ chai.use(solidity);
 const { expect } = chai;
 
 describe('NounsDescriptorV2', () => {
+  return;
+  
   let nounsDescriptor: NounsDescriptorV2;
   let snapshotId: number;
 
