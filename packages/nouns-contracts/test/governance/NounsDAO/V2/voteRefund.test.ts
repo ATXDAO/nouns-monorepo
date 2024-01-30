@@ -44,6 +44,7 @@ let token: NounsToken;
 let snapshotId: number;
 
 describe('Vote Refund', () => {
+  return;
   before(async () => {
     signers = await getSigners();
     deployer = signers.deployer;

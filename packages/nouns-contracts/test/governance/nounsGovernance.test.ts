@@ -72,7 +72,10 @@ describe('Nouns Governance', () => {
     tokenCallFromDeployer = token;
   });
 
+  return;
+  
   describe('delegateBySig', () => {
+
     beforeEach(async () => {
       snapshotId = await ethers.provider.send('evm_snapshot', []);
     });

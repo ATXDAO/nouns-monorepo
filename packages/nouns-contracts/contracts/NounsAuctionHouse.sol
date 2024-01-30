@@ -56,9 +56,9 @@ contract NounsAuctionHouse is INounsAuctionHouse, PausableUpgradeable, Reentranc
     uint256 public duration;
     // uint256 public duration = 60 * 4;
 
-    uint256 public maxDuration = 60 * 1;
+    uint256 public minDuration;
 
-    uint256 public minDuration = 60 * 60 * 24 * 30;
+    uint256 public maxDuration;
 
     uint256[] public salePrices;
 
@@ -76,7 +76,9 @@ contract NounsAuctionHouse is INounsAuctionHouse, PausableUpgradeable, Reentranc
         uint256 _timeBuffer,
         uint256 _reservePrice,
         uint8 _minBidIncrementPercentage,
-        uint256 _duration
+        uint256 _duration,
+        uint256 _minDuration,
+        uint256 _maxDuration
     ) external initializer {
         __Pausable_init();
         __ReentrancyGuard_init();
@@ -90,6 +92,8 @@ contract NounsAuctionHouse is INounsAuctionHouse, PausableUpgradeable, Reentranc
         reservePrice = _reservePrice;
         minBidIncrementPercentage = _minBidIncrementPercentage;
         duration = _duration;
+        minDuration = _minDuration;
+        maxDuration = _maxDuration;
     }
 
     /**
