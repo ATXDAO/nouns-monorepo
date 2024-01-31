@@ -74,7 +74,7 @@ const NavBar = () => {
   let output =
         <Navbar
           expand="xl"
-          style={{ backgroundColor: `${useStateBg ? stateBgColor : 'white'}` }}
+          style={{ backgroundColor: `${stateBgColor /*useStateBg ? stateBgColor : 'white'*/}` }}
           className={classes.navBarCustom}
           expanded={isNavExpanded}
         >
