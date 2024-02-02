@@ -337,27 +337,31 @@ const Bid: React.FC<{
   if (!activeAccount) {
     placeBidAction = loginHandler;
     settleAuctionAction = loginHandler;
-
   } else {
-
-    console.log(chainId);
-    console.log(CHAIN_ID);
-
     if (ENVIRONMENT_TYPE === "Mainnet") {
-  
       //When Prod is ready for ATX Nouns Mainnet, change this to whatever the selected chain is.
       if (chainId !== 5) {
       placeBidAction = switchNetworkToGoerli;
       settleAuctionAction = switchNetworkToGoerli;  
+      } else {
+        placeBidAction = auctionEnded ? settleAuctionHandler : placeBidHandler;
+        settleAuctionAction = activeAccount ? settleAuctionHandler : loginHandler;
       }
       
     } else if (ENVIRONMENT_TYPE === "Testnet") {
       if (chainId !== 5) {
         placeBidAction = switchNetworkToGoerli;
         settleAuctionAction = switchNetworkToGoerli;  
+        } else {
+          placeBidAction = auctionEnded ? settleAuctionHandler : placeBidHandler;
+          settleAuctionAction = activeAccount ? settleAuctionHandler : loginHandler;
         }
     }
+
+    
   }
+
+
 
   return (
     <>
