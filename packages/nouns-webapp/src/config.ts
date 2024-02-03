@@ -13,6 +13,7 @@ interface ExternalChainAgnosticAddresses {
   atxDaoTreasury: string | undefined;
   usdcToken: string | undefined;
   usdtToken: string | undefined;
+  subgraphApiUri: string;
 }
 
 interface ExternalContractAddresses {
@@ -122,6 +123,8 @@ const externalChainAgnosticAddresses: Record<string, ExternalChainAgnosticAddres
     atxDaoTreasury: '0x407Cf0e5Dd3C2c4bCE5a32B92109c2c6f7f1ce23',
     usdcToken: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
     usdtToken: '0xdAC17F958D2ee523a2206206994597C13D831ec7',
+    subgraphApiUri :
+      'https://api.goldsky.com/api/public/project_cldf2o9pqagp43svvbk5u3kmo/subgraphs/nouns-goerli/0.1.0/gn',
   },
   ["Testnet"]: {
     repTokensAddress: '0xF0535B9d8E98144BB4233fEdd252220d0152311E',
@@ -129,6 +132,8 @@ const externalChainAgnosticAddresses: Record<string, ExternalChainAgnosticAddres
     atxDaoTreasury: "0x3bEc6a181d6Ef7239F699DAf2fAa5FE3A5f01Edf",
     usdcToken: '0x07865c6e87b9f70255377e024ace6630c1eaa37f',
     usdtToken: undefined,
+    subgraphApiUri :
+      'https://api.goldsky.com/api/public/project_cldf2o9pqagp43svvbk5u3kmo/subgraphs/nouns-goerli/0.1.0/gn',
   },
   ["Localhost"]: {
     repTokensAddress: '0x959922bE3CAee4b8Cd9a407cc3ac1C251C2007B1',
@@ -136,6 +141,8 @@ const externalChainAgnosticAddresses: Record<string, ExternalChainAgnosticAddres
     atxDaoTreasury: '0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266',
     usdcToken: undefined,
     usdtToken: undefined,
+    subgraphApiUri :
+      'https://api.goldsky.com/api/public/project_cldf2o9pqagp43svvbk5u3kmo/subgraphs/nouns-goerli/0.1.0/gn',
   }
 }
 

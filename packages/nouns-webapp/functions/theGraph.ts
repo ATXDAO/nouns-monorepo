@@ -90,5 +90,5 @@ export const isNounDelegate = (address: string, nouns: NormalizedNoun[]) =>
 
 export const nounsQuery = async () =>
   normalizeNouns(
-    (await axios.post(config.app.subgraphApiUri, { query: nounsGql })).data.data.nouns,
+    (await axios.post(config.chainAgnosticAddresses.subgraphApiUri, { query: nounsGql })).data.data.nouns,
   );

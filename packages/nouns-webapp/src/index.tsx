@@ -99,7 +99,7 @@ const useDappConfig = {
   }
 };
 
-const client = clientFactory(config.app.subgraphApiUri);
+const client = clientFactory(config.chainAgnosticAddresses.subgraphApiUri);
 
 const Updaters = () => {
   return (
