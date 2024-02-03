@@ -5,6 +5,7 @@
     "startBlock": 7734001
   },
   "nounsAuctionHouse": {
+    "debug__Comment": "Should be the Proxy address!",
     "address": "0xCfAcfe2b0A7827204Ab0600ad04F24a8F50b103e",
     "startBlock": 7734001
   },

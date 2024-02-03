@@ -1,3 +1,42 @@
+# @atxdao/subgraph
+
+Make sure to update goerli.json with the correct values!
+
+### Authenticate
+
+To authenticate for thegraph deployment use the `Access Token` from thegraph dashboard:
+
+```sh
+yarn run graph auth https://api.thegraph.com/deploy/ $ACCESS_TOKEN
+```
+
+### Create subgraph.yaml from config template
+
+```sh
+# Official Subgraph
+yarn prepare:[network] # network = goerli
+```
+
+### Generate types to use with Typescript
+
+```sh
+yarn codegen
+```
+
+### Compile and deploy to thegraph (must be authenticated)
+
+```sh
+yarn graph deploy --product hosted-service [organization]/[subgraph-name]
+```
+
+-------------------------------
+-------------------------------
+-------------------------------
+-------------------------------
+-------------------------------
+-------------------------------
+
+
 # @nouns/subgraph
 
 A subgraph that indexes nouns events.
