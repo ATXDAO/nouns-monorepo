@@ -49,7 +49,7 @@ export const useNounToken = (nounId: EthersBN) => {
 
   const nounImgData = noun.split(';base64,').pop() as string;
   const json: NounToken = JSON.parse(atob(nounImgData));
-
+  
   return json;
 };
 

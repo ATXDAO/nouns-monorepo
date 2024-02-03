@@ -37,7 +37,7 @@ export type ContractAddresses = NounsContractAddresses & ExternalContractAddress
 interface AppConfig {
   jsonRpcUri: string;
   wsRpcUri: string;
-  subgraphApiUri: string;
+  // subgraphApiUri: string;
   enableHistory: boolean;
 }
 
@@ -90,28 +90,28 @@ const app: Record<SupportedChains, AppConfig> = {
   [ChainId.Goerli]: {
     jsonRpcUri: createNetworkHttpUrl('goerli'),
     wsRpcUri: createNetworkWsUrl('goerli'),
-    subgraphApiUri:
-      'https://api.goldsky.com/api/public/project_cldf2o9pqagp43svvbk5u3kmo/subgraphs/nouns-goerli/0.1.0/gn',
+    // subgraphApiUri:
+      // 'https://api.thegraph.com/subgraphs/name/hotmanics/test',
     enableHistory: process.env.REACT_APP_ENABLE_HISTORY === 'true',
   },
   [ChainId.Mainnet]: {
     jsonRpcUri: createNetworkHttpUrl('mainnet'),
     wsRpcUri: createNetworkWsUrl('mainnet'),
-    subgraphApiUri:
-      'https://api.goldsky.com/api/public/project_cldf2o9pqagp43svvbk5u3kmo/subgraphs/nouns/0.1.0/gn',
+    // subgraphApiUri:
+      // 'https://api.goldsky.com/api/public/project_cldf2o9pqagp43svvbk5u3kmo/subgraphs/nouns/0.1.0/gn',
     enableHistory: process.env.REACT_APP_ENABLE_HISTORY === 'true',
   },
   [ChainId.Polygon]: {
     jsonRpcUri: createNetworkHttpUrl('polygon'),
     wsRpcUri: createNetworkWsUrl('polygon'),
-    subgraphApiUri:
-      'https://api.goldsky.com/api/public/project_cldf2o9pqagp43svvbk5u3kmo/subgraphs/nouns/0.1.0/gn',
+    // subgraphApiUri:
+      // 'https://api.goldsky.com/api/public/project_cldf2o9pqagp43svvbk5u3kmo/subgraphs/nouns/0.1.0/gn',
     enableHistory: process.env.REACT_APP_ENABLE_HISTORY === 'true',
   },
   [ChainId.Hardhat]: {
     jsonRpcUri: 'http://localhost:8545',
     wsRpcUri: 'ws://localhost:8545',
-    subgraphApiUri: 'http://localhost:8000/subgraphs/name/nounsdao/nouns-subgraph',
+    // subgraphApiUri: 'http://localhost:8000/subgraphs/name/nounsdao/nouns-subgraph',
     enableHistory: process.env.REACT_APP_ENABLE_HISTORY === 'true',
   },
 };
@@ -124,7 +124,7 @@ const externalChainAgnosticAddresses: Record<string, ExternalChainAgnosticAddres
     usdcToken: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
     usdtToken: '0xdAC17F958D2ee523a2206206994597C13D831ec7',
     subgraphApiUri :
-      'https://api.goldsky.com/api/public/project_cldf2o9pqagp43svvbk5u3kmo/subgraphs/nouns-goerli/0.1.0/gn',
+      'https://api.thegraph.com/subgraphs/name/hotmanics/test',
   },
   ["Testnet"]: {
     repTokensAddress: '0xF0535B9d8E98144BB4233fEdd252220d0152311E',
@@ -133,7 +133,7 @@ const externalChainAgnosticAddresses: Record<string, ExternalChainAgnosticAddres
     usdcToken: '0x07865c6e87b9f70255377e024ace6630c1eaa37f',
     usdtToken: undefined,
     subgraphApiUri :
-      'https://api.goldsky.com/api/public/project_cldf2o9pqagp43svvbk5u3kmo/subgraphs/nouns-goerli/0.1.0/gn',
+      'https://api.thegraph.com/subgraphs/name/hotmanics/test',
   },
   ["Localhost"]: {
     repTokensAddress: '0x959922bE3CAee4b8Cd9a407cc3ac1C251C2007B1',
@@ -142,7 +142,7 @@ const externalChainAgnosticAddresses: Record<string, ExternalChainAgnosticAddres
     usdcToken: undefined,
     usdtToken: undefined,
     subgraphApiUri :
-      'https://api.goldsky.com/api/public/project_cldf2o9pqagp43svvbk5u3kmo/subgraphs/nouns-goerli/0.1.0/gn',
+      'https://api.thegraph.com/subgraphs/name/hotmanics/test',
   }
 }
 

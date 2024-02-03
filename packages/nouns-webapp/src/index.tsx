@@ -115,6 +115,10 @@ const ChainSubscriber: React.FC = () => {
   const dispatch = useAppDispatch();
 
   const loadState = async () => {
+
+
+    console.log("loaded: " + config.addresses.nounsAuctionHouseProxy);
+    
     const wsProvider = new WebSocketProvider(config.app.wsRpcUri);
     const nounsAuctionHouseContract = NounsAuctionHouseFactory.connect(
       config.addresses.nounsAuctionHouseProxy,
