@@ -5,6 +5,7 @@ Make sure to update goerli.json with the correct values!
 ### Authenticate
 
 To authenticate for thegraph deployment use the `Access Token` from thegraph dashboard:
+**This only needs to be run once on your local project!
 
 ```sh
 yarn run graph auth https://api.thegraph.com/deploy/ $ACCESS_TOKEN

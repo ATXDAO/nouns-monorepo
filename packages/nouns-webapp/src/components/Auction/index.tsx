@@ -43,7 +43,6 @@ const Auction: React.FC<AuctionProps> = props => {
     currentAuction && history.push(`/noun/${currentAuction.nounId.toNumber() + 1}`);
   };
 
-  console.log(currentAuction);
   const nounContent = currentAuction && (
     <div className={classes.nounWrapper}>
       <StandaloneNounWithSeed
