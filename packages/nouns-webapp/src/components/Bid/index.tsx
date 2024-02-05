@@ -161,6 +161,8 @@ const Bid: React.FC<{
     nounsAuctionHouseContract,
     AuctionHouseContractFunction.createBid,
   );
+
+
   const { send: settleAuction, state: settleAuctionState } = useContractFunction(
     nounsAuctionHouseContract,
     AuctionHouseContractFunction.settleCurrentAndCreateNewAuction,

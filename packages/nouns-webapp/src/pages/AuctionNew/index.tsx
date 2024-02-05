@@ -17,6 +17,12 @@ import classes from "../../components/NounsIntroSection/NounsIntroSection.module
 import { Col } from 'react-bootstrap';
 import DocumentationAuctionPage from '../../components/DocumentationAuctionPage';
 
+// NEW DEPLOYMENTS NEED TO BE UNPAUSED BEFORE A NEW AUCTION CAN START 
+// import { useContractFunction } from '@usedapp/core';
+// import config from '../../config';
+// import { NounsAuctionHouseFactory } from '@nouns/sdk';
+// import { AuctionHouseContractFunction } from '../../wrappers/nounsAuction';
+
 interface AuctionPageProps {
   initialAuctionId?: number;
 }
@@ -29,6 +35,9 @@ const AuctionPageNew: React.FC<AuctionPageProps> = props => {
   // const activeAccount = useAppSelector(state => state.account.activeAccount);
 
   const dispatch = useAppDispatch();
+
+
+
 
   useEffect(() => {
     if (!lastAuctionNounId) return;
@@ -58,8 +67,26 @@ const AuctionPageNew: React.FC<AuctionPageProps> = props => {
     ? 'var(--brand-cool-background)'
     : 'var(--brand-warm-background)';
 
+
+  // NEW DEPLOYMENTS NEED TO BE UNPAUSED BEFORE A NEW AUCTION CAN START
+
+  // const nounsAuctionHouseContract = new NounsAuctionHouseFactory().attach(
+  //   config.addresses.nounsAuctionHouseProxy,
+  // );
+
+  // const { send: unpause, state: unpauseState } = useContractFunction(
+  //   nounsAuctionHouseContract,
+  //   AuctionHouseContractFunction.unpause,
+  // );
+
+  // const handleUnpause = async ()=> {
+  //   await unpause();
+  // }
+
   return (
     <>
+     {/* NEW DEPLOYMENTS NEED TO BE UNPAUSED BEFORE A NEW AUCTION CAN START */ }
+      {/* <button onClick={handleUnpause}>Unpause</button> */}
       <Auction auction={onDisplayAuction} />
       <Section fullWidth={false} className={classes.videoSection}>
         <Col sm={12} lg={6}>
