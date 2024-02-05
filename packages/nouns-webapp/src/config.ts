@@ -65,13 +65,14 @@ export const cacheKey = (bucket: CacheBucket, ...parts: (string | number)[]) => 
 export const IS_MAINNET: boolean = (process.env.REACT_APP_IS_MAINNET?.toLowerCase() === 'true' ?? false);
 export const IS_OPTIMISM_MAINNET: boolean = (process.env.REACT_APP_IS_OPTIMISM_MAINNET?.toLowerCase() === 'true' ?? false);
 
+
+
 export const CHAIN_ID: SupportedChains =  parseInt(process.env.REACT_APP_CHAIN_ID ?? '1');
 
-console.log(process.env.REACT_APP_ENVIRONMENT_TYPE);
 
 export const ENVIRONMENT_TYPE: string = process.env.REACT_APP_ENVIRONMENT_TYPE ?? 'Mainnet';
 
-const INFURA_PROJECT_ID = '2dd05b4bb4b6476cb6bc714808ddb098';
+const INFURA_PROJECT_ID = '440a1bb7b2b6478ba46767b9640e138e';
 
 export const ETHERSCAN_API_KEY = process.env.REACT_APP_ETHERSCAN_API_KEY ?? '';
 
@@ -116,21 +117,21 @@ const app: Record<SupportedChains, AppConfig> = {
 };
 
 const externalChainAgnosticAddresses: Record<string, ExternalChainAgnosticAddresses> = {
-  ["Mainnet"]: {
+  "Mainnet": {
     repTokensAddress: '0x57AA5fd0914A46b8A426cC33DB842D1BB1aeADa2',
     cadentDistributorAddress: undefined,
     atxDaoTreasury: '0x407Cf0e5Dd3C2c4bCE5a32B92109c2c6f7f1ce23',
     usdcToken: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
     usdtToken: '0xdAC17F958D2ee523a2206206994597C13D831ec7',
   },
-  ["Testnet"]: {
+  "Testnet": {
     repTokensAddress: '0xF0535B9d8E98144BB4233fEdd252220d0152311E',
     cadentDistributorAddress: '0x88F1Af751ca23BB2B4efF893d6f45D041230FFb3',
     atxDaoTreasury: "0x3bEc6a181d6Ef7239F699DAf2fAa5FE3A5f01Edf",
     usdcToken: '0x07865c6e87b9f70255377e024ace6630c1eaa37f',
     usdtToken: undefined,
   },
-  ["Localhost"]: {
+  "Localhost": {
     repTokensAddress: '0x959922bE3CAee4b8Cd9a407cc3ac1C251C2007B1',
     cadentDistributorAddress: '0x9A9f2CCfdE556A7E9Ff0848998Aa4a0CFD8863AE',
     atxDaoTreasury: '0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266',

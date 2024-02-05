@@ -10,31 +10,28 @@ const contractInterface = new utils.Interface([
 
 export function useErc20Balance(address: string | null | undefined, tokenAddress: string | undefined, provider: any) {
 
-  const [value, setValue] = useState(BigNumber.from(0));
+  const [value, setValue] = useState();
 
   async function get(address: string | null | undefined, tokenAddress: string | undefined, provider: any) {
-      if (!address)
-          return;
-
-      if (!tokenAddress)
-        return;
+    if (!address || !tokenAddress || !provider)
+    return;
 
       const contract = new ethers.Contract(tokenAddress, contractInterface, provider);
       let balance = await contract.balanceOf(address);
 
-      console.log(balance);
       setValue(balance);
   }
 
   useEffect(() => {
+    if (value === undefined)
       get(address, tokenAddress, provider);
-  }, [address])
+  }, [value, address, tokenAddress, provider])
 
   return { value, setValue, get };
 }
 
 
-function useUSDTBalance(): { value: BigNumber } {
+function useUSDTBalance(): { value: BigNumber | undefined} {
 
   let chosen;
   if (ENVIRONMENT_TYPE === "Mainnet") {

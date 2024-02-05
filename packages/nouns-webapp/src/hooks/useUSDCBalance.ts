@@ -1,6 +1,4 @@
 import { utils, BigNumber } from 'ethers';
-import ERC20 from '../libs/abi/ERC20.json';
-import { useContractCall } from '@usedapp/core';
 import config, { ENVIRONMENT_TYPE } from '../config';
 import { useState, useEffect } from 'react';
 import { ethers } from 'ethers';
@@ -12,30 +10,27 @@ const contractInterface = new utils.Interface([
 
 export function useErc20Balance(address: string | null | undefined, tokenAddress: string | undefined, provider: any) {
 
-  const [value, setValue] = useState(BigNumber.from(0));
+  const [value, setValue] = useState();
 
   async function get(address: string | null | undefined, tokenAddress: string | undefined, provider: any) {
-      if (!address)
+      if (!address || !tokenAddress || !provider)
           return;
-
-      if (!tokenAddress)
-        return;
 
       const contract = new ethers.Contract(tokenAddress, contractInterface, provider);
       let balance = await contract.balanceOf(address);
 
-      console.log(balance);
       setValue(balance);
   }
 
   useEffect(() => {
+    if (value === undefined)
       get(address, tokenAddress, provider);
-  }, [address])
+  }, [value, address, tokenAddress, provider])
 
   return { value, setValue, get };
 }
 
-function useUSDCBalance(): { value: BigNumber } {
+function useUSDCBalance(): { value: BigNumber | undefined } {
 
   let chosen;
   if (ENVIRONMENT_TYPE === "Mainnet") {
@@ -46,20 +41,6 @@ function useUSDCBalance(): { value: BigNumber } {
 
   const provider = ethers.getDefaultProvider(chosen);
   return useErc20Balance(config.chainAgnosticAddresses.atxDaoTreasury, config.chainAgnosticAddresses.usdcToken, provider);
-
-  // useContractCall({})
-  // const [etherBalance] =
-  //   useContractCall({
-  //         abi: erc20Interface,
-  //         address: config.chainAgnosticAddresses.usdcToken,
-  //         method: 'balanceOf',
-  //         args: [config.chainAgnosticAddresses.atxDaoTreasury],
-          
-  //       }
-  //   ) ?? []
-
-  //   console.log(etherBalance);
-  // return etherBalance
 }
 
 export default useUSDCBalance;

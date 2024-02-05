@@ -71,7 +71,7 @@ const Documentation = (props: DocumentationProps = { backgroundColor: '#FFF' }) 
 
             {/* <a href="https://www.youtube.com/watch?v=ZvC-WN10E5o" target="#">A New Austin Institution</a>. */}
             <br/>
-            <iframe width="560" height="315" src="https://www.youtube.com/embed/ZvC-WN10E5o" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"></iframe>
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/ZvC-WN10E5o" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; "></iframe>
             <br/>
             <br/>
             <p>ATX DAO was founded in October 2021 as a social organization and has grown into a new Austin institution.
@@ -81,7 +81,7 @@ const Documentation = (props: DocumentationProps = { backgroundColor: '#FFF' }) 
 
             {/* <a href="https://www.youtube.com/watch?v=NUh8UGEXjJ4" target="#">Introducing ATX DAO</a>. */}
             <br/>
-            <iframe width="560" height="315" src="https://www.youtube.com/embed/NUh8UGEXjJ4" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"></iframe>
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/NUh8UGEXjJ4" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture;"></iframe>
             <br/>
             <br/>
 <p>As a DAO, each member is able to <a href="https://snapshot.org/#/atxdao.eth" target="#">create a proposal and vote on the future of our organization</a>.

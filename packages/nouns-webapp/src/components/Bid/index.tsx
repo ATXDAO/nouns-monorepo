@@ -11,19 +11,19 @@ import { useAuctionMinBidIncPercentage } from '../../wrappers/nounsAuction';
 import { useAppDispatch } from '../../hooks';
 import { AlertModal, setAlertModal } from '../../state/slices/application';
 import { NounsAuctionHouseFactory } from '@nouns/sdk';
-import config, { CHAIN_ID, ENVIRONMENT_TYPE } from '../../config';
+import config, { ENVIRONMENT_TYPE } from '../../config';
 import WalletConnectModal from '../WalletConnectModal';
-import SettleManuallyBtn from '../SettleManuallyBtn';
+// import SettleManuallyBtn from '../SettleManuallyBtn';
 import { Trans } from '@lingui/macro';
 import { useActiveLocale } from '../../hooks/useActivateLocale';
 import responsiveUiUtilsClasses from '../../utils/ResponsiveUIUtils.module.css';
-import WalletConnectButton from '../../components/NavWallet/WalletConnectButton';
-import navDropdownClasses from '../../components/NavWallet/NavBarDropdown.module.css';
-import clsx from 'clsx';
-import { usePickByState } from '../../utils/colorResponsiveUIUtils';
-import { NavBarButtonStyle } from '../../components/NavBarButton';
-import { useHistory } from 'react-router-dom';
-import { switchNetworkToEthereum, switchNetworkToGoerli, switchNetworkToOPMainnet } from '../../pages/utils/NetworkSwitcher';
+// import WalletConnectButton from '../../components/NavWallet/WalletConnectButton';
+// import navDropdownClasses from '../../components/NavWallet/NavBarDropdown.module.css';
+// import clsx from 'clsx';
+// import { usePickByState } from '../../utils/colorResponsiveUIUtils';
+// import { NavBarButtonStyle } from '../../components/NavBarButton';
+// import { useHistory } from 'react-router-dom';
+import { switchNetworkToGoerli } from '../../pages/utils/NetworkSwitcher';
 
 const computeMinimumNextBid = (
   currentBid: BigNumber,
@@ -82,18 +82,18 @@ const Bid: React.FC<{
 
   const [bidInput, setBidInput] = useState('');
 
-  const setModalStateHandler = (state: boolean) => {
-    setShowConnectModal(state);
-  };
+  // const setModalStateHandler = (state: boolean) => {
+  //   setShowConnectModal(state);
+  // };
 
-  const history = useHistory();
+  // const history = useHistory();
 
-  const connectWalletButtonStyle = usePickByState(
-    NavBarButtonStyle.WHITE_WALLET,
-    NavBarButtonStyle.COOL_WALLET,
-    NavBarButtonStyle.WARM_WALLET,
-    history,
-  );
+  // const connectWalletButtonStyle = usePickByState(
+  //   NavBarButtonStyle.WHITE_WALLET,
+  //   NavBarButtonStyle.COOL_WALLET,
+  //   NavBarButtonStyle.WARM_WALLET,
+  //   history,
+  // );
   
 
   // let placeBidContent: JSX.Element;
@@ -313,19 +313,19 @@ const Bid: React.FC<{
         setBidButtonContent({ loading: false, content: <Trans>Settle Auction</Trans> });
         break;
     }
-  }, [settleAuctionState, auctionEnded, setModal]);
+  }, [settleAuctionState, auctionEnded, setModal, activeAccount]);
 
   if (!auction) return null;
 
-  const isDisabled =
-    placeBidState.status === 'Mining' || settleAuctionState.status === 'Mining';// || !activeAccount;
+  // const isDisabled =
+  //   placeBidState.status === 'Mining' || settleAuctionState.status === 'Mining';// || !activeAccount;
 
-  const fomoNounsBtnOnClickHandler = () => {
-    // Open Fomo Nouns in a new tab
-    window.open('https://fomonouns.wtf', '_blank')?.focus();
-  };
+  // const fomoNounsBtnOnClickHandler = () => {
+  //   // Open Fomo Nouns in a new tab
+  //   window.open('https://fomonouns.wtf', '_blank')?.focus();
+  // };
 
-  const isWalletConnected = activeAccount !== undefined;
+  // const isWalletConnected = activeAccount !== undefined;
 
   const loginHandler = () => {
     setShowConnectModal(true);

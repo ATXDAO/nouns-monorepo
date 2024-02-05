@@ -1,5 +1,5 @@
 import Auction from '../../components/Auction';
-import Documentation from '../../components/Documentation';
+// import Documentation from '../../components/Documentation';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { setOnDisplayAuctionNounId } from '../../state/slices/onDisplayAuction';
 import { push } from 'connected-react-router';
@@ -7,7 +7,7 @@ import { nounPath } from '../../utils/history';
 import useOnDisplayAuction from '../../wrappers/onDisplayAuction';
 import { useEffect } from 'react';
 // import ProfileActivityFeed from '../../components/ProfileActivityFeed';
-import NounsIntroSection from '../../components/NounsIntroSection';
+// import NounsIntroSection from '../../components/NounsIntroSection';
 // import { useNftCall } from '../../wrappers/atxDaoNft/atxDaoNft';
 // import NumberGatedComponent from '../../components/NumberGatedComponent';
 // import { IS_MAINNET } from '../../config';
@@ -26,7 +26,7 @@ const AuctionPageNew: React.FC<AuctionPageProps> = props => {
   const onDisplayAuction = useOnDisplayAuction();
   const lastAuctionNounId = useAppSelector(state => state.onDisplayAuction.lastAuctionNounId);
   const onDisplayAuctionNounId = onDisplayAuction?.nounId.toNumber();
-  const activeAccount = useAppSelector(state => state.account.activeAccount);
+  // const activeAccount = useAppSelector(state => state.account.activeAccount);
 
   const dispatch = useAppDispatch();
 
@@ -34,8 +34,6 @@ const AuctionPageNew: React.FC<AuctionPageProps> = props => {
     if (!lastAuctionNounId) return;
 
     if (initialAuctionId !== undefined) {
-
-      console.log(initialAuctionId);
 
       // handle out of bounds noun path ids
       if (initialAuctionId > lastAuctionNounId || initialAuctionId < 0) {
@@ -75,7 +73,7 @@ const AuctionPageNew: React.FC<AuctionPageProps> = props => {
           </div>
         </Col>
         <Col sm={12} lg={6}>
-        <iframe width="560" height="315" src="https://www.youtube.com/embed/NUh8UGEXjJ4" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"></iframe>
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/NUh8UGEXjJ4" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture;"></iframe>
         </Col>
         </Section>
         <Section fullWidth={false} className={classes.videoSection}>
@@ -120,7 +118,7 @@ const AuctionPageNew: React.FC<AuctionPageProps> = props => {
           </div>
         </Col>
         <Col sm={12} lg={6}>
-        <iframe width="560" height="315" src="https://www.youtube.com/embed/ZvC-WN10E5o" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"></iframe>
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/ZvC-WN10E5o" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; "></iframe>
         </Col>
         </Section>
         <DocumentationAuctionPage
