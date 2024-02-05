@@ -29,8 +29,18 @@ describe('NounsAuctionHouse', () => {
   const RESERVE_PRICE = 2;
   const MIN_INCREMENT_BID_PERCENTAGE = 5;
   const DURATION = 60 * 60 * 24;
-  const MIN_DURATION = 60 * 60 * 24 * 30;
-  const MAX_DURATION = 60 * 1;
+  const MIN_DURATION = 60 * 60 * 24;
+  const MAX_DURATION = 60 * 60 * 24 * 30;
+
+
+
+  // const ATX_TIME_BUFFER = 15 * 60;
+  // const ATX_RESERVE_PRICE = .00512;
+  // const ATX_MIN_INCREMENT_BID_PERCENTAGE = 5;
+  // const ATX_DURATION = 60 * 60 * 24;
+  // const ATX_MIN_DURATION = 60 * 60 * 24;
+  // const ATX_MAX_DURATION = 60 * 60 * 24 * 30;
+
 
   // async function deploy(deployer?: SignerWithAddress) {
   //   const auctionHouseFactory = await ethers.getContractFactory('NounsAuctionHouse', deployer);

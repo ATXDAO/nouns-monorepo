@@ -11,7 +11,7 @@ task('deploy-and-configure', 'Deploy and configure all contracts')
   .addOptionalParam(
     'auctionTimeBuffer',
     'The auction time buffer (seconds)',
-    1 * 60 /* 1 minutes */,
+    2 * 60 /* 2 minutes */,
     types.int,
   )
   .addOptionalParam('auctionReservePrice', 'The auction reserve price (wei)')
