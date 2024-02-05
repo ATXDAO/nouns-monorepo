@@ -35,6 +35,9 @@ export const useAuction = (auctionHouseProxyAddress: string) => {
     method: 'auction',
     args: [],
   });
+
+  console.log("got auction");
+  
   return auction as Auction;
 };
 
