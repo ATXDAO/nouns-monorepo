@@ -41,28 +41,28 @@ export function useGetLastSalePrice(tokenAddress: string | undefined, provider: 
     if (!tokenAddress || !provider)
     return;
 
-  const abi = new utils.Interface(NounsAuctionHouseABI);
+  // const abi = new utils.Interface(NounsAuctionHouseABI);
 
-      const contract = new ethers.Contract(tokenAddress, abi, provider);
+  //     const contract = new ethers.Contract(tokenAddress, abi, provider);
 
-      let duration = await contract.duration();
-      console.log("duration: ", duration.toString());
+  //     let duration = await contract.duration();
+  //     console.log("duration: ", duration.toString());
       
-      let min = await contract.minDuration();
-      console.log("min: ", min.toString());
+  //     let min = await contract.minDuration();
+  //     console.log("min: ", min.toString());
 
-      let max = await contract.maxDuration();
-      console.log("max: ", max.toString());
-      setValue(duration);
+  //     let max = await contract.maxDuration();
+  //     console.log("max: ", max.toString());
+  //     setValue(duration);
 
       // let salePrices = await contract.salePrices(1);
       // console.log("sale prices: ", salePrices);
 
-      let tp = await contract.targetPrice();
-      console.log("target price: ", tp);
+      // let tp = await contract.targetPrice();
+      // console.log("target price: ", tp);
 
-      let owner = await contract.owner();
-      console.log("owner: ", owner);
+      // let owner = await contract.owner();
+      // console.log("owner: ", owner);
   }
 
   useEffect(() => {
