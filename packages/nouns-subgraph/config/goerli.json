@@ -1,17 +1,17 @@
 {
   "network": "goerli",
   "nounsToken": {
-    "address": "0x9Ce7aAC22165788ACEc75bEB34910b8A21A68156",
-    "startBlock": 7734001
+    "address": "0x69D9270774885B07b2D13422A688C2C4cBF5e8FB",
+    "startBlock": 10492167
   },
   "nounsAuctionHouse": {
     "debug__Comment": "Should be the Proxy address!",
-    "address": "0x3c3EAC6161fEA82e5721bE71Ac5135ba741f8646",
-    "startBlock": 7734001
+    "address": "0xb30e60Cee13F900e0a22b5DAD258B669964347b8",
+    "startBlock": 10492167
   },
   "nounsDAO": {
     "debug__Comment": "Should be ATX DAO multi-sig or similar!",
-    "address": "0x3bEc6a181d6Ef7239F699DAf2fAa5FE3A5f01Edf",
-    "startBlock": 7734001
+    "address": "0xf84779Ea5C6ba59d15F2eCEA05759C5E2D730b77",
+    "startBlock": 10492167
   }
 }

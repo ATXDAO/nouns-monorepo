@@ -132,12 +132,12 @@ contract NounsAuctionHouse is
 
         //if last sale price is less than target price, then duration should be bigger
 
-        // if (duration > maxDuration) {
-        //     duration = maxDuration;
-        // }
-        // if (duration < minDuration) {
-        //     duration = minDuration;
-        // }
+        if (duration > maxDuration) {
+            duration = maxDuration;
+        }
+        if (duration < minDuration) {
+            duration = minDuration;
+        }
     }
 
     /**

@@ -14,7 +14,7 @@ export enum AuctionHouseContractFunction {
   nouns = 'nouns',
   createBid = 'createBid',
   settleCurrentAndCreateNewAuction = 'settleCurrentAndCreateNewAuction',
-  unpause = 'unpause',
+  setTargetPrice = 'setTargetPrice',
   targetPrice = 'targetPrice'
 }
 
@@ -37,8 +37,6 @@ export const useAuction = (auctionHouseProxyAddress: string) => {
     args: [],
   });
 
-  console.log("got auction");
-  
   return auction as Auction;
 };
 

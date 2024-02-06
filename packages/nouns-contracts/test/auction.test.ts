@@ -25,13 +25,21 @@ describe('NounsAuctionHouse', () => {
   let bidderB: SignerWithAddress;
   let snapshotId: number;
 
-  const TIME_BUFFER = 5 * 60;
+  const TIME_BUFFER = 60 * 1;
   const RESERVE_PRICE = "5120000000000000";
   const MIN_INCREMENT_BID_PERCENTAGE = 5;
-  const DURATION = 60 * 15;
-  const MIN_DURATION = 60 * 15;
-  const MAX_DURATION = BigInt(60 * 30);
+  const DURATION = 60 * 3;
+  const MIN_DURATION = 60 * 3;
+  const MAX_DURATION = BigInt(60 * 60 * 24 * 30);
   const TARGET_PRICE = "0.1";
+
+  // const TIME_BUFFER = 5 * 60;
+  // const RESERVE_PRICE = "5120000000000000";
+  // const MIN_INCREMENT_BID_PERCENTAGE = 5;
+  // const DURATION = 60 * 15;
+  // const MIN_DURATION = 60 * 15;
+  // const MAX_DURATION = BigInt(60 * 30);
+  // const TARGET_PRICE = "0.1";
 
 
   // async function deploy(deployer?: SignerWithAddress) {

@@ -125,7 +125,7 @@ const externalChainAgnosticAddresses: Record<string, ExternalChainAgnosticAddres
     usdcToken: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
     usdtToken: '0xdAC17F958D2ee523a2206206994597C13D831ec7',
     subgraphApiUri :
-      'https://api.thegraph.com/subgraphs/name/hotmanics/test-5',
+      'https://api.thegraph.com/subgraphs/name/hotmanics/test6',
   },
   "Testnet": {
     repTokensAddress: '0xF0535B9d8E98144BB4233fEdd252220d0152311E',
@@ -134,7 +134,7 @@ const externalChainAgnosticAddresses: Record<string, ExternalChainAgnosticAddres
     usdcToken: '0x07865c6e87b9f70255377e024ace6630c1eaa37f',
     usdtToken: undefined,
     subgraphApiUri :
-      'https://api.thegraph.com/subgraphs/name/hotmanics/test-5',
+      'https://api.thegraph.com/subgraphs/name/hotmanics/test6',
   },
   "Localhost": {
     repTokensAddress: '0x959922bE3CAee4b8Cd9a407cc3ac1C251C2007B1',
@@ -143,7 +143,7 @@ const externalChainAgnosticAddresses: Record<string, ExternalChainAgnosticAddres
     usdcToken: undefined,
     usdtToken: undefined,
     subgraphApiUri :
-      'https://api.thegraph.com/subgraphs/name/hotmanics/test-5',
+      'https://api.thegraph.com/subgraphs/name/hotmanics/test6',
   }
 }
 

@@ -16,16 +16,76 @@ import Section from '../../layout/Section';
 import classes from "../../components/NounsIntroSection/NounsIntroSection.module.css"
 import { Col } from 'react-bootstrap';
 import DocumentationAuctionPage from '../../components/DocumentationAuctionPage';
+import { ethers, utils } from 'ethers';
+import config, {createNetworkHttpUrl} from '../../config';
 
 // NEW DEPLOYMENTS NEED TO BE UNPAUSED BEFORE A NEW AUCTION CAN START 
-// import { useContractFunction } from '@usedapp/core';
-// import config from '../../config';
-// import { NounsAuctionHouseFactory } from '@nouns/sdk';
-// import { AuctionHouseContractFunction } from '../../wrappers/nounsAuction';
+import { useContractFunction } from '@usedapp/core';
+import { NounsAuctionHouseFactory } from '@nouns/sdk';
+import { AuctionHouseContractFunction } from '../../wrappers/nounsAuction';
+import { useContractCall } from '@usedapp/core';
+
+import { NounsAuctionHouseABI } from '@nouns/sdk';
+import { useState } from 'react';
+import { ENVIRONMENT_TYPE } from '../../config';
 
 interface AuctionPageProps {
   initialAuctionId?: number;
 }
+
+export function useGetLastSalePrice(tokenAddress: string | undefined, provider: any) {
+
+  const [value, setValue] = useState();
+
+  async function get(tokenAddress: string | undefined, provider: any) {
+    if (!tokenAddress || !provider)
+    return;
+
+  const abi = new utils.Interface(NounsAuctionHouseABI);
+
+      const contract = new ethers.Contract(tokenAddress, abi, provider);
+
+      let duration = await contract.duration();
+      console.log("duration: ", duration.toString());
+      
+      let min = await contract.minDuration();
+      console.log("min: ", min.toString());
+
+      let max = await contract.maxDuration();
+      console.log("max: ", max.toString());
+      setValue(duration);
+
+      // let salePrices = await contract.salePrices(1);
+      // console.log("sale prices: ", salePrices);
+
+      let tp = await contract.targetPrice();
+      console.log("target price: ", tp);
+
+      let owner = await contract.owner();
+      console.log("owner: ", owner);
+  }
+
+  useEffect(() => {
+    if (value === undefined)
+      get(tokenAddress, provider);
+  }, [value, tokenAddress, provider])
+
+  return { value, setValue, get };
+}
+
+// export const useLastSalePrice = (auctionHouseProxyAddress: string) => {
+//   const abi = new utils.Interface(NounsAuctionHouseABI);
+  
+//   const lsp = useContractCall<any>({
+//     abi,
+//     address: auctionHouseProxyAddress,
+//     method: 'getLastSalePrice',
+//     args: [],
+//   });
+
+//   return lsp;
+// };
+
 
 const AuctionPageNew: React.FC<AuctionPageProps> = props => {
   const { initialAuctionId } = props;
@@ -36,7 +96,16 @@ const AuctionPageNew: React.FC<AuctionPageProps> = props => {
 
   const dispatch = useAppDispatch();
 
+  let chosen;
+  if (ENVIRONMENT_TYPE === "Mainnet") {
+    chosen = createNetworkHttpUrl("mainnet")
+  } else if (ENVIRONMENT_TYPE === "Testnet") {
+    chosen = createNetworkHttpUrl("goerli")
+  }
 
+  const provider = ethers.getDefaultProvider(chosen);
+
+  useGetLastSalePrice(config.addresses.nounsAuctionHouseProxy, provider);
 
 
   useEffect(() => {
@@ -70,23 +139,24 @@ const AuctionPageNew: React.FC<AuctionPageProps> = props => {
 
   // NEW DEPLOYMENTS NEED TO BE UNPAUSED BEFORE A NEW AUCTION CAN START
 
-  // const nounsAuctionHouseContract = new NounsAuctionHouseFactory().attach(
-  //   config.addresses.nounsAuctionHouseProxy,
-  // );
+  const nounsAuctionHouseContract = new NounsAuctionHouseFactory().attach(
+    config.addresses.nounsAuctionHouseProxy,
+  );
 
-  // const { send: unpause, state: unpauseState } = useContractFunction(
-  //   nounsAuctionHouseContract,
-  //   AuctionHouseContractFunction.unpause,
-  // );
 
-  // const handleUnpause = async ()=> {
-  //   await unpause();
-  // }
+  const { send: setTargetPrice, state: unpauseState } = useContractFunction(
+    nounsAuctionHouseContract,
+    AuctionHouseContractFunction.setTargetPrice,
+  );
+
+  const handleUnpause = async ()=> {
+    await setTargetPrice(utils.parseUnits("0.1", "ether"));
+  }
 
   return (
     <>
      {/* NEW DEPLOYMENTS NEED TO BE UNPAUSED BEFORE A NEW AUCTION CAN START */ }
-      {/* <button onClick={handleUnpause}>Unpause</button> */}
+      <button onClick={handleUnpause}>Unpause</button>
       <Auction auction={onDisplayAuction} />
       <Section fullWidth={false} className={classes.videoSection}>
         <Col sm={12} lg={6}>
