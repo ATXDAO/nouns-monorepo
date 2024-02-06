@@ -14,7 +14,8 @@ export enum AuctionHouseContractFunction {
   nouns = 'nouns',
   createBid = 'createBid',
   settleCurrentAndCreateNewAuction = 'settleCurrentAndCreateNewAuction',
-  unpause = 'unpause'
+  unpause = 'unpause',
+  targetPrice = 'targetPrice'
 }
 
 export interface Auction {

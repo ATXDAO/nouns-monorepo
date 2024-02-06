@@ -129,12 +129,15 @@ contract NounsAuctionHouse is
         if (lastSalePrice != 0) {
             duration = (duration * targetPrice) / lastSalePrice;
         }
-        if (duration > maxDuration) {
-            duration = maxDuration;
-        }
-        if (duration < minDuration) {
-            duration = minDuration;
-        }
+
+        //if last sale price is less than target price, then duration should be bigger
+
+        // if (duration > maxDuration) {
+        //     duration = maxDuration;
+        // }
+        // if (duration < minDuration) {
+        //     duration = minDuration;
+        // }
     }
 
     /**
@@ -297,6 +300,10 @@ contract NounsAuctionHouse is
         salePrices.push(lastSalePrice);
 
         emit AuctionSettled(_auction.nounId, _auction.bidder, _auction.amount);
+    }
+
+    function getLastSalePrice() external view returns (uint256) {
+        return salePrices[salePrices.length - 1];
     }
 
     /**
