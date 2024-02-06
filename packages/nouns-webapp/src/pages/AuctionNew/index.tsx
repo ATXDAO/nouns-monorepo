@@ -20,10 +20,10 @@ import { ethers, utils } from 'ethers';
 import config, {createNetworkHttpUrl} from '../../config';
 
 // NEW DEPLOYMENTS NEED TO BE UNPAUSED BEFORE A NEW AUCTION CAN START 
-import { useContractFunction } from '@usedapp/core';
-import { NounsAuctionHouseFactory } from '@nouns/sdk';
-import { AuctionHouseContractFunction } from '../../wrappers/nounsAuction';
-import { useContractCall } from '@usedapp/core';
+// import { useContractFunction } from '@usedapp/core';
+// import { NounsAuctionHouseFactory } from '@nouns/sdk';
+// import { AuctionHouseContractFunction } from '../../wrappers/nounsAuction';
+// import { useContractCall } from '@usedapp/core';
 
 import { NounsAuctionHouseABI } from '@nouns/sdk';
 import { useState } from 'react';
@@ -139,24 +139,24 @@ const AuctionPageNew: React.FC<AuctionPageProps> = props => {
 
   // NEW DEPLOYMENTS NEED TO BE UNPAUSED BEFORE A NEW AUCTION CAN START
 
-  const nounsAuctionHouseContract = new NounsAuctionHouseFactory().attach(
-    config.addresses.nounsAuctionHouseProxy,
-  );
+  // const nounsAuctionHouseContract = new NounsAuctionHouseFactory().attach(
+  //   config.addresses.nounsAuctionHouseProxy,
+  // );
 
 
-  const { send: setTargetPrice, state: unpauseState } = useContractFunction(
-    nounsAuctionHouseContract,
-    AuctionHouseContractFunction.setTargetPrice,
-  );
+  // const { send: setTargetPrice, state: unpauseState } = useContractFunction(
+  //   nounsAuctionHouseContract,
+  //   AuctionHouseContractFunction.setTargetPrice,
+  // );
 
-  const handleUnpause = async ()=> {
-    await setTargetPrice(utils.parseUnits("0.1", "ether"));
-  }
+  // const handleUnpause = async ()=> {
+  //   await setTargetPrice(utils.parseUnits("0.1", "ether"));
+  // }
 
   return (
     <>
      {/* NEW DEPLOYMENTS NEED TO BE UNPAUSED BEFORE A NEW AUCTION CAN START */ }
-      <button onClick={handleUnpause}>Unpause</button>
+      {/* <button onClick={handleUnpause}>Unpause</button> */}
       <Auction auction={onDisplayAuction} />
       <Section fullWidth={false} className={classes.videoSection}>
         <Col sm={12} lg={6}>
