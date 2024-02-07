@@ -81,7 +81,9 @@ const AuctionTimer: React.FC<{
             )
           ) : (
             <>
-              <Trans>Ends on</Trans> {i18n.date(new Date(endTimeUnix * 1000), { month: 'short' })}{' '}
+              <Trans>Ends on</Trans> 
+              {i18n.date(new Date(endTimeUnix * 1000), { month: 'short' })}
+              {' '}
               {i18n.date(new Date(endTimeUnix * 1000), { day: 'numeric' })} <Trans>at</Trans>
             </>
           )}
@@ -95,6 +97,14 @@ const AuctionTimer: React.FC<{
               color: isCool ? 'var(--brand-cool-dark-text)' : 'var(--brand-warm-dark-text)',
             }}
           >
+            <div className={classes.timerSection}>
+              <span>
+                {`${Math.floor(timerDuration.days())}`}
+                <span className={classes.small}>
+                  <Trans>d</Trans>
+                </span>
+              </span>
+              </div>
             <div className={classes.timerSection}>
               <span>
                 {`${Math.floor(timerDuration.hours())}`}

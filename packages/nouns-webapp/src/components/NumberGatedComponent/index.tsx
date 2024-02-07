@@ -2,9 +2,6 @@ import { IS_MAINNET } from '../../config';
 
 const NumberGatedComponent = (props: any) => {
 
-    console.log(props.children);
-    console.log(props.number);
-
     let output;
     if (props.number > 0) {
         output = <> { props.children } </>

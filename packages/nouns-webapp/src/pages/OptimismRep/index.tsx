@@ -8,7 +8,7 @@ import axios from 'axios';
 import { useRepCall } from '../../wrappers/rep/rep';
 import { useCadentCall, useCadentFunction } from '../../wrappers/cadentRepDistributor/cadentRepDistributor';
 import { switchNetworkToGoerli, switchNetworkToLocalhost, switchNetworkToOPMainnet } from '../utils/NetworkSwitcher';
-import { CHAIN_ID, IS_MAINNET, IS_OPTIMISM_MAINNET } from '../../config';
+import { CHAIN_ID, IS_MAINNET } from '../../config';
 import { useEthers } from '@usedapp/core';
 import optimismImage from '../../assets/optimism.png';
 
@@ -26,9 +26,6 @@ const OptimismRepPage = () => {
 
   let loadingOutput;
 
-  console.log(IS_OPTIMISM_MAINNET);
-
-  
   if (!IS_MAINNET) {
 
     if (CHAIN_ID === 31337) {

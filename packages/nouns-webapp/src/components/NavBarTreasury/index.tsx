@@ -3,9 +3,9 @@ import { NavBarButtonStyle } from '../NavBarButton';
 import clsx from 'clsx';
 import { Trans } from '@lingui/macro';
 // import { i18n } from '@lingui/core';
-import config, { CHAIN_ID, IS_MAINNET } from '../../config';
-import { useEthers } from '@usedapp/core';
-import { switchNetworkToEthereum, switchNetworkToGoerli, switchNetworkToLocalhost } from '../../pages/utils/NetworkSwitcher';
+// import config, { CHAIN_ID, IS_MAINNET } from '../../config';
+// import { useEthers } from '@usedapp/core';
+// import { switchNetworkToEthereum, switchNetworkToGoerli, switchNetworkToLocalhost } from '../../pages/utils/NetworkSwitcher';
 
 interface NavBarTreasuryProps {
   treasuryBalance: string;
@@ -14,7 +14,7 @@ interface NavBarTreasuryProps {
 
 const NavBarTreasury: React.FC<NavBarTreasuryProps> = props => {
   const { treasuryBalance, treasuryStyle } = props;
-  const { chainId } = useEthers();
+  // const { chainId } = useEthers();
 
   let treasuryStyleClass;
   switch (treasuryStyle) {

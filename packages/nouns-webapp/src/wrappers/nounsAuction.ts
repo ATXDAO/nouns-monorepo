@@ -14,6 +14,8 @@ export enum AuctionHouseContractFunction {
   nouns = 'nouns',
   createBid = 'createBid',
   settleCurrentAndCreateNewAuction = 'settleCurrentAndCreateNewAuction',
+  setTargetPrice = 'setTargetPrice',
+  targetPrice = 'targetPrice'
 }
 
 export interface Auction {
@@ -35,8 +37,6 @@ export const useAuction = (auctionHouseProxyAddress: string) => {
     args: [],
   });
 
-  console.log("got auction");
-  
   return auction as Auction;
 };
 

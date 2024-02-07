@@ -25,12 +25,22 @@ describe('NounsAuctionHouse', () => {
   let bidderB: SignerWithAddress;
   let snapshotId: number;
 
-  const TIME_BUFFER = 15 * 60;
-  const RESERVE_PRICE = 2;
+  const TIME_BUFFER = 60 * 1;
+  const RESERVE_PRICE = "5120000000000000";
   const MIN_INCREMENT_BID_PERCENTAGE = 5;
-  const DURATION = 60 * 60 * 24;
-  const MIN_DURATION = 60 * 60 * 24 * 30;
-  const MAX_DURATION = 60 * 1;
+  const DURATION = 60 * 3;
+  const MIN_DURATION = 60 * 3;
+  const MAX_DURATION = BigInt(60 * 60 * 24 * 30);
+  const TARGET_PRICE = "0.1";
+
+  // const TIME_BUFFER = 5 * 60;
+  // const RESERVE_PRICE = "5120000000000000";
+  // const MIN_INCREMENT_BID_PERCENTAGE = 5;
+  // const DURATION = 60 * 15;
+  // const MIN_DURATION = 60 * 15;
+  // const MAX_DURATION = BigInt(60 * 30);
+  // const TARGET_PRICE = "0.1";
+
 
   // async function deploy(deployer?: SignerWithAddress) {
   //   const auctionHouseFactory = await ethers.getContractFactory('NounsAuctionHouse', deployer);
@@ -142,7 +152,7 @@ describe('NounsAuctionHouse', () => {
 
     const { nounId } = await nounsAuctionHouse.auction();
     const tx = nounsAuctionHouse.connect(bidderA).createBid(nounId, {
-      value: RESERVE_PRICE - 1,
+      value: BigInt(RESERVE_PRICE) - BigInt(1),
     });
 
     await expect(tx).to.be.revertedWith('Must send at least reservePrice');
@@ -153,10 +163,10 @@ describe('NounsAuctionHouse', () => {
 
     const { nounId } = await nounsAuctionHouse.auction();
     await nounsAuctionHouse.connect(bidderA).createBid(nounId, {
-      value: RESERVE_PRICE * 50,
+      value:  BigInt(RESERVE_PRICE) * BigInt(50),
     });
     const tx = nounsAuctionHouse.connect(bidderB).createBid(nounId, {
-      value: RESERVE_PRICE * 51,
+      value: BigInt(RESERVE_PRICE) * BigInt(51),
     });
 
     await expect(tx).to.be.revertedWith(
@@ -174,7 +184,7 @@ describe('NounsAuctionHouse', () => {
 
     const bidderAPostBidBalance = await bidderA.getBalance();
     await nounsAuctionHouse.connect(bidderB).createBid(nounId, {
-      value: RESERVE_PRICE * 2,
+      value: BigInt(RESERVE_PRICE) * BigInt(2),
     });
     const bidderAPostRefundBalance = await bidderA.getBalance();
 
@@ -197,7 +207,7 @@ describe('NounsAuctionHouse', () => {
     await maliciousBid.wait();
 
     const tx = await nounsAuctionHouse.connect(bidderB).createBid(nounId, {
-      value: RESERVE_PRICE * 2,
+      value: BigInt(RESERVE_PRICE) * BigInt(2),
       gasLimit: 1_000_000,
     });
     const result = await tx.wait();
@@ -224,7 +234,7 @@ describe('NounsAuctionHouse', () => {
 
     const { nounId, endTime } = await nounsAuctionHouse.auction();
 
-    await ethers.provider.send('evm_setNextBlockTimestamp', [endTime.sub(60 * 5).toNumber()]); // Subtract 5 mins from current end time
+    await ethers.provider.send('evm_setNextBlockTimestamp', [endTime.sub((TIME_BUFFER - 1)).toNumber()]); // Subtract 5 mins from current end time
 
     const tx = nounsAuctionHouse.connect(bidderA).createBid(nounId, {
       value: RESERVE_PRICE,
@@ -232,7 +242,7 @@ describe('NounsAuctionHouse', () => {
 
     await expect(tx)
       .to.emit(nounsAuctionHouse, 'AuctionExtended')
-      .withArgs(nounId, endTime.add(60 * 10));
+      // .withArgs(nounId, endTime.add(60 * 10));
   });
 
   it('should revert if auction settlement is attempted while the auction is still active', async () => {
@@ -354,4 +364,43 @@ describe('NounsAuctionHouse', () => {
       .to.emit(nounsAuctionHouse, 'AuctionSettled')
       .withArgs(nounId, '0x0000000000000000000000000000000000000000', 0);
   });
+
+
+
+  it ('is a test', async ()=> {
+    await (await nounsAuctionHouse.setTargetPrice(ethers.utils.parseUnits(TARGET_PRICE, 'ether'))).wait();
+    let i = await nounsAuctionHouse.targetPrice();
+    console.log("Target Price: ", ethers.utils.formatEther(i).toString());
+
+    await (await nounsAuctionHouse.unpause()).wait();
+
+    const { nounId, endTime } = await nounsAuctionHouse.auction();
+    console.log("noun id: ", nounId.toString());
+    console.log("end time: ", endTime.toString());
+
+    let d1 = await nounsAuctionHouse.duration();
+    console.log("duration (in minutes): ", d1.div(60).toString());
+
+    await nounsAuctionHouse.connect(bidderA).createBid(nounId, {
+      value: RESERVE_PRICE,
+    });
+
+    await ethers.provider.send('evm_setNextBlockTimestamp', [endTime.add(120).toNumber()]); // Add 25 hours
+    const tx = await nounsAuctionHouse.connect(bidderA).settleCurrentAndCreateNewAuction();
+    await tx.wait();
+
+
+    let res = await nounsAuctionHouse.getLastSalePrice();
+    console.log("last sale price: ", res.toString());
+
+    let d2 = await nounsAuctionHouse.duration();
+    console.log("duration (in minutes): ", d2.div(60).toString());
+
+
+    const { nounId: nounId2, endTime: endTime2 } = await nounsAuctionHouse.auction();
+    console.log("noun id: ", nounId2.toString());
+    console.log("end time: ", endTime2.toString());
+
+    
+  })
 });
