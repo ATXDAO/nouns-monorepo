@@ -1,6 +1,6 @@
 import { useEtherBalance } from '@usedapp/core';
 import useLidoBalance from './useLidoBalance';
-import useUSDCBalance from './useUSDCBalance';
+import { useUSDCBalance, useMaticBalance, useDaiBalance, useWethBalance } from './useUSDCBalance';
 import useUSDTBalance from './useUSDTBalance';
 import useTokenBuyerBalance from './useTokenBuyerBalance';
 import { useCoingeckoPrice } from '@usedapp/coingecko';
@@ -42,17 +42,28 @@ export const useTreasuryUSDValue = () => {
   );
   const ethValue = Number(etherPrice * treasuryBalanceETH);
 
-  // const usdcBalance = useUSDCBalance()?.div(10**6);
 
   const { value: usdtValue } = useUSDTBalance();
-
   const { value: usdcValue } = useUSDCBalance();
+  const { value: maticValue } = useMaticBalance();
+  const { value: daiValue } = useDaiBalance();
+  const { value: wethValue } = useWethBalance();
 
-  // usdtValue.valueOf();
   const usdtBalance = usdtValue?.div(10**6);
     const usdcBalance = usdcValue?.div(10**6);
-  // return Number((usdcBalance ?? zero).add(zero)) + ethValue;
-  return Number((usdcBalance ?? zero).add(usdtBalance ?? zero)) + ethValue;
+    let maticBalance = 0;
+    if (maticValue)
+    maticBalance = Number(ethers.utils.formatEther(maticValue));
+
+    let daiBalance = 0;
+    if (daiValue)
+      daiBalance = Number(ethers.utils.formatEther(daiValue));
+
+      let wethBalance = 0;
+      if (wethValue)
+        wethBalance = Number(ethers.utils.formatEther(wethValue));
+      
+  return Number((usdcBalance ?? zero).add(usdtBalance ?? zero)) + ethValue + maticBalance + daiBalance + wethBalance;
 };
 
 

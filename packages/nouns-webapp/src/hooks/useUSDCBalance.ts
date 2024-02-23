@@ -30,7 +30,7 @@ export function useErc20Balance(address: string | null | undefined, tokenAddress
   return { value, setValue, get };
 }
 
-function useUSDCBalance(): { value: BigNumber | undefined } {
+export function useUSDCBalance(): { value: BigNumber | undefined } {
 
   let chosen;
   if (ENVIRONMENT_TYPE === "Mainnet") {
@@ -43,4 +43,42 @@ function useUSDCBalance(): { value: BigNumber | undefined } {
   return useErc20Balance(config.chainAgnosticAddresses.atxDaoTreasury, config.chainAgnosticAddresses.usdcToken, provider);
 }
 
-export default useUSDCBalance;
+export function useMaticBalance(): { value: BigNumber | undefined } {
+
+  let chosen;
+  if (ENVIRONMENT_TYPE === "Mainnet") {
+    chosen = createNetworkHttpUrl("mainnet")
+  } else if (ENVIRONMENT_TYPE === "Testnet") {
+    chosen = createNetworkHttpUrl("goerli")
+  }
+
+  const provider = ethers.getDefaultProvider(chosen);
+  return useErc20Balance(config.chainAgnosticAddresses.atxDaoTreasury, config.chainAgnosticAddresses.maticToken, provider);
+}
+
+export function useDaiBalance(): { value: BigNumber | undefined } {
+
+  let chosen;
+  if (ENVIRONMENT_TYPE === "Mainnet") {
+    chosen = createNetworkHttpUrl("mainnet")
+  } else if (ENVIRONMENT_TYPE === "Testnet") {
+    chosen = createNetworkHttpUrl("goerli")
+  }
+
+  const provider = ethers.getDefaultProvider(chosen);
+  return useErc20Balance(config.chainAgnosticAddresses.atxDaoTreasury, config.chainAgnosticAddresses.daiToken, provider);
+}
+
+export function useWethBalance(): { value: BigNumber | undefined } {
+
+  let chosen;
+  if (ENVIRONMENT_TYPE === "Mainnet") {
+    chosen = createNetworkHttpUrl("mainnet")
+  } else if (ENVIRONMENT_TYPE === "Testnet") {
+    chosen = createNetworkHttpUrl("goerli")
+  }
+
+  const provider = ethers.getDefaultProvider(chosen);
+  return useErc20Balance(config.chainAgnosticAddresses.atxDaoTreasury, config.chainAgnosticAddresses.wethToken, provider);
+}
+
