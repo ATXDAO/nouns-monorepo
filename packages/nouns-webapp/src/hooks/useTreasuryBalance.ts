@@ -7,7 +7,7 @@ import { useCoingeckoPrice } from '@usedapp/coingecko';
 import config, { ENVIRONMENT_TYPE } from '../config';
 // import { formatEther } from '@ethersproject/units'
 import { BigNumber, ethers } from 'ethers';
-import { CHAIN_ID } from '../config';
+// import { CHAIN_ID } from '../config';
 import { useState } from 'react'
 import { useEffect } from 'react'
 
@@ -17,6 +17,7 @@ import { useEffect } from 'react'
  * @returns Total balance of treasury (ETH + Lido) as EthersBN
  */
 export const useTreasuryBalance = () => {
+  
   const ethBalance = useEtherBalance('0x407Cf0e5Dd3C2c4bCE5a32B92109c2c6f7f1ce23');
   const lidoBalanceAsETH = useLidoBalance();
   const tokenBuyerBalanceAsETH = useTokenBuyerBalance();
@@ -32,7 +33,6 @@ export const useTreasuryBalance = () => {
  * @returns USD value of treasury assets (ETH + Lido + USDC) at current exchange rate
  */
 export const useTreasuryUSDValue = () => {
-
   const zero = BigNumber.from(0);
 
   const etherPrice = Number(useCoingeckoPrice('ethereum', 'usd'));
@@ -59,8 +59,6 @@ export const useTreasuryUSDValue = () => {
 export function useEtherBalanceUsingEthers(address: string | undefined): BigNumber | undefined {
   const [balance, setBalance] = useState<BigNumber>();
 
-  console.log(address);
-
   useEffect(()=> {
     async function get() {
       if (!address)
@@ -84,7 +82,7 @@ export function useEtherBalanceUsingEthers(address: string | undefined): BigNumb
 
     }
       get();
-  }, []);
+  }, [address]);
 
   return balance;
 }

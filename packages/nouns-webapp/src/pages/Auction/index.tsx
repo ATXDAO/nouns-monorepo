@@ -1,11 +1,11 @@
 // import Auction from '../../components/Auction';
 import Documentation from '../../components/Documentation';
-import { useAppDispatch, useAppSelector } from '../../hooks';
-import { setOnDisplayAuctionNounId } from '../../state/slices/onDisplayAuction';
-import { push } from 'connected-react-router';
-import { nounPath } from '../../utils/history';
+import { useAppSelector } from '../../hooks';
+// import { setOnDisplayAuctionNounId } from '../../state/slices/onDisplayAuction';
+// import { push } from 'connected-react-router';
+// import { nounPath } from '../../utils/history';
 import useOnDisplayAuction from '../../wrappers/onDisplayAuction';
-import { useEffect } from 'react';
+// import { useEffect } from 'react';
 // import ProfileActivityFeed from '../../components/ProfileActivityFeed';
 import NounsIntroSection from '../../components/NounsIntroSection';
 // import { useNftCall } from '../../wrappers/atxDaoNft/atxDaoNft';
@@ -18,13 +18,13 @@ interface AuctionPageProps {
 }
 
 const AuctionPage: React.FC<AuctionPageProps> = props => {
-  const { initialAuctionId } = props;
+  // const { initialAuctionId } = props;
   const onDisplayAuction = useOnDisplayAuction();
   const lastAuctionNounId = useAppSelector(state => state.onDisplayAuction.lastAuctionNounId);
   const onDisplayAuctionNounId = onDisplayAuction?.nounId.toNumber();
   // const activeAccount = useAppSelector(state => state.account.activeAccount);
 
-  const dispatch = useAppDispatch();
+  // const dispatch = useAppDispatch();
 
   // useEffect(() => {
   //   if (!lastAuctionNounId) return;

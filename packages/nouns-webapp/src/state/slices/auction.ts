@@ -72,7 +72,6 @@ export const auctionSlice = createSlice({
       console.log('processed auction create', action.payload);
     },
     setFullAuction: (state, action: PayloadAction<IAuction>) => {
-      console.log(`from set full auction: `, action.payload);
       state.activeAuction = reduxSafeAuction(action.payload);
     },
     appendBid: (state, action: PayloadAction<BidEvent>) => {

@@ -28,32 +28,44 @@ task('deploy', 'Deploys NFTDescriptor, NounsDescriptor, NounsSeeder, and NounsTo
   .addOptionalParam('weth', 'The WETH contract address', undefined, types.string)
   .addOptionalParam('noundersdao', 'The nounders DAO contract address', undefined, types.string)
   .addOptionalParam(
-    'auctionTimeBuffer',
-    'The auction time buffer (seconds)',
-    5 * 60 /* 5 minutes */,
-    types.int,
-  )
-  .addOptionalParam(
-    'auctionReservePrice',
-    'The auction reserve price (wei)',
-    5120000000000000 /* 1 wei */,
-    types.int,
-  )
-  .addOptionalParam(
     'auctionMinIncrementBidPercentage',
     'The auction min increment bid percentage (out of 100)',
     2 /* 2% */,
     types.int,
   )
   .addOptionalParam(
-    'auctionDuration',
-    'The auction duration (seconds)',
-    // 60 * 60 * 24 /* 24 hours */,
-    60 /* 1 min */,
+    'auctionReservePrice',
+    'The auction reserve price (wei)',
+    5120000000000000 /* 0.00512 */,
     types.int,
   )
-  .addOptionalParam('minDuration', 'The auction MINIMUM duration (seconds)', 60 * 60 * 24 * 30, types.int)
-  .addOptionalParam('maxDuration', 'The auction MAXIMUM duration (seconds)', 60 * 1, types.int)
+  .addOptionalParam(
+    'auctionTimeBuffer',
+    'The auction time buffer (seconds)',
+    60 * 2,
+    types.int,
+  )
+  .addOptionalParam(
+    'auctionDuration',
+    'The auction duration (seconds)',
+    // 60 * 60 * 24 * 30 /* 30 days */
+    // 60 * 60 * 24 /* 24 hours */,
+    60 * 3 /* 3 minutes */,
+    types.int,
+  )
+  .addOptionalParam(
+    'minDuration',
+    'The auction MINIMUM duration (seconds)',
+    60 * 3, // 10 mins
+    types.int
+  )
+  .addOptionalParam(
+    'maxDuration',
+    'The auction MAXIMUM duration (seconds)',
+    60 * 10, // 10 mins
+    // 60 * 60 * 24 * 30, // 30 days
+    types.int
+  )
   .addOptionalParam(
     'timelockDelay',
     'The timelock delay (seconds)',

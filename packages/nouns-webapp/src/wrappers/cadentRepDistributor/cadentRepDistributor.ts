@@ -1,6 +1,6 @@
 import cadentRepDistributorABI from "./abi";
 import { utils } from 'ethers';
-import config from '../../config';
+// import config from '../../config';
 import { useContractCall, useContractFunction } from '@usedapp/core';
 import { Contract } from '@ethersproject/contracts'
 
