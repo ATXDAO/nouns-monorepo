@@ -77,7 +77,7 @@ export const CHAIN_ID: SupportedChains =  parseInt(process.env.REACT_APP_CHAIN_I
 
 export const ENVIRONMENT_TYPE: string = process.env.REACT_APP_ENVIRONMENT_TYPE ?? 'Mainnet';
 
-const INFURA_PROJECT_ID = '440a1bb7b2b6478ba46767b9640e138e';
+export const INFURA_PROJECT_ID = '440a1bb7b2b6478ba46767b9640e138e';
 
 export const ETHERSCAN_API_KEY = process.env.REACT_APP_ETHERSCAN_API_KEY ?? '';
 

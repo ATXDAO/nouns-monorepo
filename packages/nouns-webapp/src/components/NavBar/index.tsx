@@ -36,6 +36,8 @@ const NavBar = () => {
   const isCool = useAppSelector(state => state.application.isCoolBackground);
   const history = useHistory();
   const treasuryBalance = useTreasuryUSDValue();
+  // const treasuryBalance = 0;
+  console.log("Re-rendering");
   const daoEtherscanLink = buildEtherscanHoldingsLinkByDefiningChainId(config.chainAgnosticAddresses.atxDaoTreasury || "");
 
   const [isNavExpanded, setIsNavExpanded] = useState(false);

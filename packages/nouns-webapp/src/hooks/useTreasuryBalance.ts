@@ -52,16 +52,13 @@ export const useTreasuryUSDValue = () => {
   const usdtBalance = usdtValue?.div(10**6);
     const usdcBalance = usdcValue?.div(10**6);
     let maticBalance = 0;
-    if (maticValue)
-    maticBalance = Number(ethers.utils.formatEther(maticValue));
+    maticBalance = Number(ethers.utils.formatEther(maticValue || 0));
 
     let daiBalance = 0;
-    if (daiValue)
-      daiBalance = Number(ethers.utils.formatEther(daiValue));
+      daiBalance = Number(ethers.utils.formatEther(daiValue || 0));
 
       let wethBalance = 0;
-      if (wethValue)
-        wethBalance = Number(ethers.utils.formatEther(wethValue));
+        wethBalance = Number(ethers.utils.formatEther(wethValue || 0));
       
   return Number((usdcBalance ?? zero).add(usdtBalance ?? zero)) + ethValue + maticBalance + daiBalance + wethBalance;
 };

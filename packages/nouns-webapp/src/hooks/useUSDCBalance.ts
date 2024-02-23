@@ -1,5 +1,5 @@
 import { utils, BigNumber } from 'ethers';
-import config, { ENVIRONMENT_TYPE } from '../config';
+import config, { ENVIRONMENT_TYPE, INFURA_PROJECT_ID } from '../config';
 import { useState, useEffect } from 'react';
 import { ethers } from 'ethers';
 import { createNetworkHttpUrl } from '../config';
@@ -39,7 +39,7 @@ export function useUSDCBalance(): { value: BigNumber | undefined } {
     chosen = createNetworkHttpUrl("goerli")
   }
 
-  const provider = ethers.getDefaultProvider(chosen);
+  const provider = ethers.getDefaultProvider("https://eth-mainnet.g.alchemy.com/v2/wEdkAUlsWlrcGPvQseMu2CWlOBuikWd-");
   return useErc20Balance(config.chainAgnosticAddresses.atxDaoTreasury, config.chainAgnosticAddresses.usdcToken, provider);
 }
 
@@ -52,7 +52,7 @@ export function useMaticBalance(): { value: BigNumber | undefined } {
     chosen = createNetworkHttpUrl("goerli")
   }
 
-  const provider = ethers.getDefaultProvider(chosen);
+  const provider = ethers.getDefaultProvider("https://eth-mainnet.g.alchemy.com/v2/wEdkAUlsWlrcGPvQseMu2CWlOBuikWd-");
   return useErc20Balance(config.chainAgnosticAddresses.atxDaoTreasury, config.chainAgnosticAddresses.maticToken, provider);
 }
 
@@ -65,7 +65,9 @@ export function useDaiBalance(): { value: BigNumber | undefined } {
     chosen = createNetworkHttpUrl("goerli")
   }
 
-  const provider = ethers.getDefaultProvider(chosen);
+  ;
+
+  const provider = ethers.getDefaultProvider("https://eth-mainnet.g.alchemy.com/v2/wEdkAUlsWlrcGPvQseMu2CWlOBuikWd-");
   return useErc20Balance(config.chainAgnosticAddresses.atxDaoTreasury, config.chainAgnosticAddresses.daiToken, provider);
 }
 
@@ -78,7 +80,7 @@ export function useWethBalance(): { value: BigNumber | undefined } {
     chosen = createNetworkHttpUrl("goerli")
   }
 
-  const provider = ethers.getDefaultProvider(chosen);
+  const provider = ethers.getDefaultProvider("https://eth-mainnet.g.alchemy.com/v2/wEdkAUlsWlrcGPvQseMu2CWlOBuikWd-");
   return useErc20Balance(config.chainAgnosticAddresses.atxDaoTreasury, config.chainAgnosticAddresses.wethToken, provider);
 }
 
