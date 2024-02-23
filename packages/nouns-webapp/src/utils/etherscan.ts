@@ -1,5 +1,6 @@
 import { ChainId } from '@usedapp/core';
 import { CHAIN_ID, ETHERSCAN_API_KEY } from '../config';
+import { ENVIRONMENT_TYPE } from '../config';
 
 const getBaseURL = (network: ChainId) => {
   switch (network) {
@@ -25,6 +26,21 @@ export const buildEtherscanAddressLink = (address: string): string => {
 export const buildEtherscanTokenLink = (tokenContractAddress: string, tokenId: number): string => {
   const path = `token/${tokenContractAddress}?a=${tokenId}`;
   return new URL(path, BASE_URL).toString();
+};
+
+export const buildEtherscanHoldingsLinkByDefiningChainId = (address: string): string => {
+
+  if (ENVIRONMENT_TYPE === "Mainnet") {
+    const path = `tokenholdings?a=${address}`;
+    return new URL(path, getBaseURL(1)).toString();
+  } else if (ENVIRONMENT_TYPE === "Testnet") {
+    const path = `tokenholdings?a=${address}`;
+    return new URL(path, getBaseURL(5)).toString();
+  } else {
+    return "";
+  }
+  
+  
 };
 
 export const buildEtherscanHoldingsLink = (address: string): string => {

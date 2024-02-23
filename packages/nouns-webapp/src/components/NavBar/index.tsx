@@ -28,6 +28,7 @@ import { useState } from 'react';
 // import { ReactComponent as Noggles } from '../../assets/icons/Noggles.svg';
 import { useTreasuryUSDValue } from '../../hooks/useTreasuryBalance';
 // import clsx from 'clsx';
+import { buildEtherscanHoldingsLinkByDefiningChainId } from '../../utils/etherscan';
 
 const NavBar = () => {
   const activeAccount = useAppSelector(state => state.account.activeAccount);
@@ -35,7 +36,7 @@ const NavBar = () => {
   const isCool = useAppSelector(state => state.application.isCoolBackground);
   const history = useHistory();
   const treasuryBalance = useTreasuryUSDValue();
-  const daoEtherscanLink = buildEtherscanHoldingsLink(config.addresses.atxDaoTreasury || "");
+  const daoEtherscanLink = buildEtherscanHoldingsLinkByDefiningChainId(config.chainAgnosticAddresses.atxDaoTreasury || "");
 
   const [isNavExpanded, setIsNavExpanded] = useState(false);
 
