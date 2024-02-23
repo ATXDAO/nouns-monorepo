@@ -13,6 +13,10 @@ interface ExternalChainAgnosticAddresses {
   atxDaoTreasury: string | undefined;
   usdcToken: string | undefined;
   usdtToken: string | undefined;
+  maticToken: string | undefined;
+  daiToken: string | undefined;
+  wethToken: string | undefined;
+
   subgraphApiUri: string;
 }
 
@@ -124,6 +128,9 @@ const externalChainAgnosticAddresses: Record<string, ExternalChainAgnosticAddres
     atxDaoTreasury: '0x407Cf0e5Dd3C2c4bCE5a32B92109c2c6f7f1ce23',
     usdcToken: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
     usdtToken: '0xdAC17F958D2ee523a2206206994597C13D831ec7',
+    maticToken: '0x7d1afa7b718fb893db30a3abc0cfc608aacfebb0',
+    daiToken: "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+    wethToken: "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
     subgraphApiUri :
       'https://api.thegraph.com/subgraphs/name/hotmanics/test6',
   },
@@ -132,7 +139,10 @@ const externalChainAgnosticAddresses: Record<string, ExternalChainAgnosticAddres
     cadentDistributorAddress: '0x88F1Af751ca23BB2B4efF893d6f45D041230FFb3',
     atxDaoTreasury: "0x3bEc6a181d6Ef7239F699DAf2fAa5FE3A5f01Edf",
     usdcToken: '0x07865c6e87b9f70255377e024ace6630c1eaa37f',
+    maticToken: '0x7d1afa7b718fb893db30a3abc0cfc608aacfebb0',
     usdtToken: undefined,
+    daiToken: undefined,
+    wethToken: undefined,
     subgraphApiUri :
       'https://api.thegraph.com/subgraphs/name/hotmanics/test6',
   },
@@ -140,8 +150,11 @@ const externalChainAgnosticAddresses: Record<string, ExternalChainAgnosticAddres
     repTokensAddress: '0x959922bE3CAee4b8Cd9a407cc3ac1C251C2007B1',
     cadentDistributorAddress: '0x9A9f2CCfdE556A7E9Ff0848998Aa4a0CFD8863AE',
     atxDaoTreasury: '0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266',
+    maticToken: '0x7d1afa7b718fb893db30a3abc0cfc608aacfebb0',
     usdcToken: undefined,
     usdtToken: undefined,
+    daiToken: undefined,
+    wethToken: undefined,
     subgraphApiUri :
       'https://api.thegraph.com/subgraphs/name/hotmanics/test6',
   }
